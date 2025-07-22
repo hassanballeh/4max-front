@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import {Navigation} from 'swiper/modules'
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { BiLeftArrowCircle } from "react-icons/bi";
 const ArrivalSlider = () => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);

@@ -35,7 +35,7 @@ const Register = () => {
             <div className="lg:container mx-auto">
                 <div className="flex items-center justify-between gap-10">
                     {/* image wrapper */}
-                    <div className='max-w-[940px] w-full min-h=[1077px] h-full'>
+                    <div className='max-w-[940px] w-full min-h-[1077px] h-full'>
                         <img className='w-full h-full object-cover' src="bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" alt="login image" />
                     </div>
 

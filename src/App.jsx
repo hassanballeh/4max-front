@@ -1,46 +1,40 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router";
 import Footer from "./Components/Footer/Footer";
 import Home from "./pages/Home/Home";
+import HomeNavbar from "./Components/HomeNavbar/HomeNavbar";
+import Navbar from "./Components/Navbar/Navbar";
 import Register from "./pages/Auth/Register/Register";
 import Login from "./pages/Auth/Login/Login";
 import ConfirmationCode from "./pages/Auth/ConfirmationCode/ConfirmationCode";
 import Admin from "./pages/Auth/Admin/Admin";
-import Products from "./Components/Products/Products";
-import HomeNavbar from "./Components/Navbar/HomeNavbar";
-import DefaultNavbar from "./Components/Navbar/DefaultNavbar";
 import NewArrival from "./Components/NewArrival/NewArrival";
+import Products from "./pages/Products";
 
-const Layout = () => {
-	const location = useLocation();
-	const isHome = location.pathname === "/";
+
+function App() {
 
 	return (
 		<>
-			{isHome ? <HomeNavbar /> : <DefaultNavbar />}
-
+		<BrowserRouter>	
+		<Navbar/>	
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/products" element={<Products />} />
-				<Route path="/newarrival" element={<NewArrival />} />
 
+				<Route path="/newarrival" element={<NewArrival />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/confirmation-code" element={<ConfirmationCode />} />
 				<Route path="/admin" element={<Admin />} />
 			</Routes>
 
+			{/* footer component */}
 			<Footer />
+			</BrowserRouter>
 		</>
-	);
-};
-
-function App() {
-	return (
-		<BrowserRouter>
-			<Layout />
-		</BrowserRouter>
-	);
+	)
 }
 
 export default App;

@@ -18,45 +18,32 @@ const Navbar = () => {
     </div>
 
 
-    {isHomePage ? (
-        <nav className='flex items-center gap-6'>
-            <NavLink to="/products" className="text-base text-[#484848] capitalize font-normal">Products</NavLink>
-            <h1>|</h1>
-            <NavLink to="/newarrival" className="text-base text-[#484848] capitalize font-normal">New Arrival</NavLink>
-            <h1>|</h1>
-            <NavLink to="/offers" className="text-base text-[#484848] capitalize font-normal">Offers</NavLink>
-        </nav>
-    ) : (
-        <nav className='flex items-center gap-6'>
-            <NavLink to="/products" className="text-base text-[#484848] capitalize font-normal">Summer</NavLink>
-            <h1>|</h1>
-            <NavLink to="/products" className="text-base text-[#484848] capitalize font-normal">Winter</NavLink>
-        </nav>
-    )}
 
-    <div className='flex items-center gap-4 px-25'>
-        {isHomePage ? (
-            <>
-                <NavLink to="/login" className='text-base text-[#484848] capitalize font-normal'>Sign In</NavLink>
+        <nav className='flex items-center gap-10 px-25'>
+            <NavLink to="/" className="text-base text-[#484848] capitalize font-normal">Home</NavLink>
+            <NavLink to="/newarrival" className="text-base text-[#484848] capitalize font-normal">New Arrival</NavLink>
+            <NavLink to="/offers" className="text-base text-[#484848] capitalize font-normal">Offers</NavLink>
+            <NavLink to="/offers" className="text-base text-[#484848] capitalize font-normal">our</NavLink>
+        <NavLink to="/login" className='text-base text-[#484848] capitalize font-normal'>Sign In</NavLink>
                 <NavLink to="/register" className='text-base capitalize font-normal px-5 py-2.5 bg-black text-white rounded-lg'>
                     Sign Up
                 </NavLink>
-            </>
-        ) : (
-            <>
-                <Link to="/profile" className='cursor-pointer'>
-                    <FaUser size="1.5rem" color="#484848" />
-                </Link>
-                <Link to="/wishlist" className='cursor-pointer'>
-                    <FaHeart size="1.5rem" color="#484848" />
-                </Link>
-                <Link to="/cart" className='cursor-pointer'>
-                    <TiShoppingCart size="1.5rem" color="#484848" />
-                </Link>
-            </>
-        )}
+        </nav>
+
+
+            {/* // <>
+            //     <Link to="/profile" className='cursor-pointer'>
+            //         <FaUser size="1.5rem" color="#484848" />
+            //     </Link>
+            //     <Link to="/wishlist" className='cursor-pointer'>
+            //         <FaHeart size="1.5rem" color="#484848" />
+            //     </Link>
+            //     <Link to="/cart" className='cursor-pointer'>
+            //         <TiShoppingCart size="1.5rem" color="#484848" />
+            //     </Link>
+            // </> */}
+        
     </div>
-</div>
 
     );
 };

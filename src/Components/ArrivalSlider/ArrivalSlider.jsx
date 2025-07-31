@@ -16,9 +16,9 @@ const SliderComponent = () => {
   };
 
   const slides = [
-    { id: 1, image: "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg" },
-    { id: 2, image: "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg" },
-    { id: 3, image: "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg" },
+    { id: 1, image: "bannerPhoto/photo_2025-07-30_21-50-10.jpg" },
+    { id: 2, image: "bannerPhoto/photo_2_2025-07-30_22-00-59.jpg" },
+    { id: 3, image: "bannerPhoto/photo_2025-07-30_22-15-01.jpg" },
   ];
 
   return (
@@ -26,7 +26,7 @@ const SliderComponent = () => {
       <Slider {...settings}>
         {slides.map((slide) => (
           <div key={slide.id}>
-            <img src={slide.image} alt={slide.title} className="w-full max-h-[500px] h-full
+            <img src={slide.image} alt={slide.title} className=" rounded w-full max-h-[500px] h-full
             object-cover" />
           </div>
         ))}

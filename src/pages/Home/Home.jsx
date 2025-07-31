@@ -1,6 +1,7 @@
 import React from "react";
 import Banner from "../../Components/Banner/Banner";
 import NewArrival from "../../Components/NewArrival/NewArrival";
+import Contact from "../../Components/Contact/Contact"
 
 const Home = () => {
 	return (
@@ -15,6 +16,10 @@ const Home = () => {
 			{/* new arrival component */}
 			<div>
 				<NewArrival />
+			</div>
+			
+			<div>
+				<Contact />
 			</div>
 		</div>
 	);

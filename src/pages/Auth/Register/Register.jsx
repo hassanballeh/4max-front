@@ -36,11 +36,11 @@ const Register = () => {
                 <div className="flex items-center justify-between gap-10">
                     {/* image wrapper */}
                     <div className='max-w-[940px] w-full min-h-[1077px] h-full'>
-                        <img className='w-full h-full object-cover' src="bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" alt="login image" />
+                        <img className='rounded w-full h-full object-cover' src="bannerPhoto/photo_3_2025-07-30_19-02-44.jpg" alt="login image" />
                     </div>
 
           {/* content wrapper */}
-          <div className="max-w-[628px] w-full h-auto">
+          <div className="max-w-[628px] w-full h-auto mb-130">
             <h3 className="text-6xl text-[#484848] font-normal uppercase mb-9">4max</h3>
             <h4 className="text-3xl font-black font-normal capitalize flex items-center mb-14">
               sign up to <span className="uppercase">&nbsp;4max</span></h4>

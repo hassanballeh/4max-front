@@ -1,17 +1,21 @@
 import { Link } from 'react-router'
 import ArrivalSlider from '../ArrivalSlider/ArrivalSlider';
+import { FaHandHoldingHeart } from "react-icons/fa";
+import { FaAward } from "react-icons/fa";
+import { FaShippingFast } from "react-icons/fa";
+import { IoCall } from "react-icons/io5";
 
 const NewArrival = () => {
     return(
-        <div>
-            <div className="w-full min-h [782px] bg-white mt-[100px] py-10 px-25">
+        <div className='w-full min-h [782px] bg-white mt-[100px] py-10 px-25 flex items-center justify-center shadow-lg'>
+            <div>
                 <div className="lg:container mx-auto">
                     <div className="flex items-center justify-between gap-8">
 
-                        { /*new arrival*/ }
                         <div className="arrival_wrapper">
-                            <h3 className='text-5xl text-[#484848] font-normal
-                            capitalize mb-5'>new arrival!</h3>
+                        <section id="new-arrivals" className="scroll-mt-24 py-12">
+                            <h3 className="text-5xl text-[#484848] font-normal capitalize mb-5">new arrival!</h3></section>
+
                             <p className='text-base text[#8a8a8a] font-normal mb-10 max-w-[444px]
                             w-full h-auto'>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 Repellendus laborum perferendis omnis numquam hic laudantium
@@ -69,10 +73,63 @@ const NewArrival = () => {
                         {/* slider */}
                         <ArrivalSlider/>
                         </div> 
+
+                        { /* icons */ }
+                        <div className="w-full pt-[150px] pb-[150px]">
+                                    <div className="lg:continer mx-auto">
+                                        {/* top wrapper */}
+                                        <div className="flex items-center">
+                                        </div>
+
+                                        
+
+                                        {/* bottom wrapper */}
+                                        <div className="flex items-center justify-between gap-8">
+                                            <div className="flex items-center gap-3">
+                                                <button><FaHandHoldingHeart size={'2.5rem'} color='black' /></button>
+                                                <div>
+                                                    <h4 className="text-xl text-[#484848] font-poppins font-medium
+                                                    capitalize mb-2">high quality</h4>
+                                                    <span className="text-base text-[#484848] font-poppins
+                                                    font-normal">crafted from top materials</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <button><FaAward size={'2.5rem'} color='black'/></button>
+                                                <div>
+                                                    <h4 className="text-xl text-[#484848] font-poppins font-medium
+                                                    capitalize mb-2">warranty</h4>
+                                                    <span className="text-base text-[#484848] font-poppins
+                                                    font-normal">over 2 years</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <button><FaShippingFast size={'2.5rem'} color='black'/></button>
+                                                <div>
+                                                    <h4 className="text-xl text-[#484848] font-poppins font-medium
+                                                    capitalize mb-2">free shipping</h4>
+                                                    <span className="text-base text-[#484848] font-poppins
+                                                    font-normal">over 150 $ </span>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <button><IoCall size={'2.5rem'} color='black'/></button>
+                                                <div>
+                                                    <h4 className="text-xl text-[#484848] font-poppins font-medium
+                                                    capitalize mb-2">24/7 support</h4>
+                                                    <span className="text-base text-[#484848] font-poppins
+                                                    font-normal">dedicated support</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         </div>
+                                         </div> 
                 </div>
             </div>
+            
         </div>
     );
 };
 
 export default NewArrival;
+

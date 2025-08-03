@@ -9,6 +9,8 @@ import Login from "./pages/Auth/Login/Login";
 import ConfirmationCode from "./pages/Auth/ConfirmationCode/ConfirmationCode";
 import Admin from "./pages/Auth/Admin/Admin";
 import Products from "./pages/Products";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/products" element={<Products />} />
+				<Route path="/product-details" element={<ProductDetails />} />
+				<Route path="/cart" element={<Cart />} />
 				
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />

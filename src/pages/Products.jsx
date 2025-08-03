@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import axios from 'axios';
 
 const Products = () => {
@@ -103,14 +104,14 @@ const Products = () => {
                 <p className="text-sm font-medium">Sizes: 
                   <span className="ml-1 text-gray-700">{product.sizes.join(', ')}</span>
                 </p>
-                <p className="text-sm font-medium">Colors: 
+                <p className="text-sm font-medium pb-5">Colors: 
                   <span className="ml-1 text-gray-700">{product.colors.join(', ')}</span>
                 </p>
               </div>
 
-              <button className="mt-4 w-full bg-[#484848] text-white py-2 rounded-xl hover:bg-[gray] transition">
+              <Link to={'/product-details'} className="w-full bg-[#484848] text-white px-20 py-2 rounded-xl hover:bg-[gray] transition">
                 View Details
-              </button>
+              </Link>
             </div>
           </div>
         ))}

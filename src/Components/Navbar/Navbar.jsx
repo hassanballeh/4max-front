@@ -24,6 +24,10 @@ const Navbar = () => {
           New Arrival
         </HashLink>
 
+        <HashLink smooth to="/#products" className="text-base text-[#484848] capitalize font-normal hover:text-black transition">
+          Products
+        </HashLink>
+
         <HashLink smooth to="/#contact" className="text-base text-[#484848] capitalize font-normal hover:text-black transition">
           Contact
         </HashLink>

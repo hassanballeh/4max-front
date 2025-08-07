@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const Banner = () => {
     return (
-        <div className="w-full pt-[90px] pb-[100px] shadow-lg">
+        <div className="w-full pt-[90px] pb-[100px]">
             <div className="lg:container mx-auto">
                 <div className="flex items-center justfly-between gap-6 min-h-
                 [756px] h-full">

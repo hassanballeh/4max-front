@@ -7,7 +7,7 @@ import { IoCall } from "react-icons/io5";
 
 const NewArrival = () => {
     return(
-        <div className='w-full min-h [782px] bg-white mt-[100px] py-10 px-25 flex items-center justify-center shadow-lg'>
+        <div className='w-full min-h [782px] bg-white mt-[100px] py-10 px-25 flex items-center justify-center'>
             <div>
                 <div className="lg:container mx-auto">
                     <div className="flex items-center justify-between gap-8">

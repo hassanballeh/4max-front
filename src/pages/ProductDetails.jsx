@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
-import { Link } from 'react-router';
 
 const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState('M');
@@ -117,9 +116,9 @@ const ProductDetail = () => {
               </div>
           </div>
           
-          <Link to='/cart' className="mt-8 w-full bg-black text-white py-3 px-60 rounded-md font-medium hover:bg-gray-800 transition-colors">
+          <button className="mt-8 w-full bg-black text-white py-3 px-4 rounded-md font-medium hover:bg-gray-800 transition-colors">
             Add To Cart
-          </Link>
+          </button>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router-dom"; // ✅ use react-router-dom
 import Banner from "./Components/Banner/Banner";
 import Footer from "./Components/Footer/Footer";
 import Home from "./pages/Home/Home";
@@ -13,33 +13,28 @@ import Products from "./Components/Products/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import FavouriteList from "./pages/FavouriteList";
+import { AuthProvider } from "./context/AuthContext"; // ✅ Import AuthProvider
 
 function App() {
-
-	return (
-		<>
-		<BrowserRouter>	
-		<Navbar/>
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/products" element={<Products />} />
-				<Route path="/product-details" element={<ProductDetails />} />
-				<Route path="/cart" element={<Cart />} />
-				<Route path="/favouriteList" element={<FavouriteList />} />
-				
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
-				<Route path="/confirmation-code" element={<ConfirmationCode />} />
-				<Route path="/admin" element={<Admin />} />
-			</Routes>
-			<div className="scroll-smooth">
-  <Routes />
-  <Footer />
-</div>
-
-			</BrowserRouter>
-		</>
-	)
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product-details" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/favouriteList" element={<FavouriteList />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/confirmation-code" element={<ConfirmationCode />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
 export default App;

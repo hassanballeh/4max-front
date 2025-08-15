@@ -1,39 +1,27 @@
 // src/context/AuthContext.js
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginUser } from "../back/auth";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
 
-  // Auto-load user on app start (if token exists)
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const profile = await login();
-        setUser(profile);
-      } catch (err) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadUser();
-  }, []);
-
-  const login = async (email, password) => {
-    const data = await loginUser(email, password);
-    localStorage.setItem("token", data.token);
-    setToken(data.token);
-    setUser(data.user);
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [token]);
+  const login = (token) => {
+    setToken(token);
   };
 
+  const logout = () => {
+    setToken(null);
+  };
   return (
-    <AuthContext.Provider value={{ token, login }}>
+    <AuthContext.Provider value={{ login, logout, token }}>
       {children}
     </AuthContext.Provider>
   );

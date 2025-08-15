@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
-
+import { loginUser } from "../../../back/auth";
 const Login = () => {
-  const { login } = useAuth();
+  const { login: authLogin } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -13,11 +13,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await login(email, password);
+      const res = await loginUser(email, password);
+      authLogin(res.access_token);
       console.log(res);
       navigate("/"); // redirect after login success
     } catch (err) {
-      setError("Invalid credentials");
+      // console.log(err);
+      setError("Invalid email or password");
     }
   };
 

@@ -59,7 +59,7 @@ const NewArrival = () => {
 
 {/* Icons Section */}
 <div className="mt-40 pl-10 lg:pl-15 lg:pr-4">
-  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-50">
+  <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-50">
     {[
       {
         icon: <FaHandHoldingHeart size="2rem" />,

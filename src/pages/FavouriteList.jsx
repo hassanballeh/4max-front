@@ -1,58 +1,85 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
-const FavouriteList = () => {
+const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(8);
 
-  const [favouritelistItems, setFavouriteListItems] = useState([
-    {
-      id: 1,
-      name: "Product 1",
-      price: 20,
-      size: "M",
-      color: "red"
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      price: 300,
-      size: "S",
-      color: "Blue"
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 100,
-      size: "L",
-      color: "Red"
-    }
-  ]);
+  useEffect(() => {
+    const mockProducts = [
+      { id: 1, name: "Classic White T-Shirt", price: 24.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 2, name: "Blue Denim Jacket", price: 59.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 3, name: "Black Hoodie", price: 39.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 4, name: "Red Flannel Shirt", price: 34.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 5, name: "Beige Chinos", price: 45.00, imageUrl: "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg" },
+      { id: 6, name: "Green Polo Shirt", price: 29.99, imageUrl: "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg" },
+      { id: 7, name: "Leather Jacket", price: 120.00, imageUrl: "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg" },
+      { id: 8, name: "Navy Blue Shorts", price: 22.50, imageUrl: "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg" },
+      { id: 9, name: "Classic White T-Shirt", price: 24.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 10, name: "Blue Denim Jacket", price: 59.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 11, name: "Black Hoodie", price: 39.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 12, name: "Red Flannel Shirt", price: 34.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 13, name: "Classic White T-Shirt", price: 24.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 14, name: "Blue Denim Jacket", price: 59.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 15, name: "Black Hoodie", price: 39.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" },
+      { id: 16, name: "Red Flannel Shirt", price: 34.99, imageUrl: "bannerPhoto/photo_2_2025-07-16_23-09-20.jpg" }
+    ];
+    setProducts(mockProducts);
+  }, []);
 
-  const removeItem = (id) => {
-    setFavouriteListItems(favouritelistItems.filter(item => item.id !== id));
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id)
+        ? prev.filter((favId) => favId !== id)
+        : [...prev, id]
+    );
   };
 
+  const showMoreProducts = () => {
+    setVisibleCount((prev) => prev + 8);
+  };
+
+  const visibleProducts = products.slice(0, visibleCount);
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Your Favourite List</h1>
-      
-      <div className="space-y-6 mb-8">
-        {favouritelistItems.map((item) => (
-          <div key={item.id} className="border-b pb-4">
-            <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
-            <div className="flex flex-col space-y-1 text-gray-600">
-              <p><span className="font-medium">Size:</span> {item.size}</p>
-              <p><span className="font-medium">Color:</span> {item.color}</p>
-            </div>
-            <button 
-              onClick={() => removeItem(item.id)}
-              className="mt-2 text-red-500 hover:text-red-700 text-sm"
+    <div className="max-w-[1440px] mx-auto px-6 py-12 mt-25">
+      <div className="text-3xl text-[#484848] font-bold mb-10 text-center">Your Favourite List</div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {visibleProducts.map((product) => {
+          const isFavorite = favorites.includes(product.id);
+
+          return (
+            <div
+              key={product.id}
+              className="relative bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300"
             >
-              Remove
-            </button>
-          </div>
-        ))}
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="w-full h-48 object-cover"
+              />
+
+
+              <div className="p-4">
+                <h2 className="text-lg font-semibold mb-1">{product.name}</h2>
+                <p className="text-gray-500 text-sm mb-4">${product.price.toFixed(2)}</p>
+
+                <Link
+                  to="/product-details"
+                  className="block w-full text-center bg-[#484848] text-white px-4 py-2 rounded-xl hover:bg-gray-700 transition"
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 };
 
-export default FavouriteList;
+export default Products;

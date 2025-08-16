@@ -3,34 +3,48 @@ import { Link, NavLink } from 'react-router';
 
 const Footer = () => {
     return (
-        <div className='w-full bg-white pt-[30px] pb-[20px] border-t-[1px] border-[#d9d9d9]'>
-            <div className="lg:container mx-auto">
-                <div className="flex items-center justify-between px-25 pb-6">
-                    {/* logo wrapper */}
+        <footer className="w-full bg-white pt-[30px] pb-[20px] border-t border-[#d9d9d9] lg:px-16">
+            <div className="max-w-[1440px] mx-auto px-[100px]">
+                
+                <div className="flex flex-col md:flex-row items-center justify-between pb-6 gap-4">
+                    
                     <div className="logo_wrapper">
-                        <Link to={'/'}><h3 className='text-[2.5rem] text-[#484848] uppercase
-                        font-normal'>4max</h3></Link>
+                        <Link to="/">
+                            <h3 className="text-[2.5rem] text-[#484848] uppercase font-bold">
+                                4max
+                            </h3>
+                        </Link>
                     </div>
 
-                    {/* navbar wrapper */}
-                    <div>
-                       <nav className='flex items-center gap-[1.5rem]'>
-						<NavLink to={'/'} className='text-base text-[#484848] capitalize font-normal font-poppins'>support center</NavLink>
-						<NavLink to={'/'} className='text-base text-[#484848] capitalize font-normal font-poppins'>invoicing</NavLink>
-						<NavLink to={'/'} className='text-base text-[#484848] capitalize font-normal font-poppins'>contact</NavLink>
-						<NavLink to={'/'} className='text-base text-[#484848] capitalize font-normal font-poppins'>career</NavLink>
-						<NavLink to={'/'} className='text-base text-[#484848] capitalize font-normal font-poppins'>blog</NavLink>
-                        <NavLink to={'/'} className='text-base text-[#484848] capitalize font-normal font-poppins'>FAQs</NavLink>
-					</nav>
-                    </div>
+                    
+                    <nav className="flex flex-wrap justify-center gap-6 md:gap-[1.5rem]">
+                        {[
+                            'support center',
+                            'invoicing',
+                            'contact',
+                            'career',
+                            'blog',
+                            'FAQs',
+                        ].map((label, idx) => (
+                            <NavLink
+                                key={idx}
+                                to="/"
+                                className="text-base text-[#484848] capitalize font-normal font-poppins"
+                            >
+                                {label}
+                            </NavLink>
+                        ))}
+                    </nav>
                 </div>
             </div>
 
+            
             <div className="flex items-center justify-center">
-                <p className='text-sm text-[#484848] font-poppins font-normal'>Copyright &copy;
-                20250 formax. All Rights Reserved</p>
+                <p className="text-sm text-[#484848] font-poppins font-normal text-center px-4">
+                    &copy; 2025 4max. All Rights Reserved.
+                </p>
             </div>
-        </div>
+        </footer>
     );
 };
 

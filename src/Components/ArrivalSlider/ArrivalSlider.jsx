@@ -16,18 +16,21 @@ const SliderComponent = () => {
   };
 
   const slides = [
-    { id: 1, image: "bannerPhoto/photo_2025-07-30_21-50-10.jpg" },
+    { id: 1, image: "bannerPhoto/IMG_5631.JPG" },
     { id: 2, image: "bannerPhoto/photo_2_2025-07-30_22-00-59.jpg" },
     { id: 3, image: "bannerPhoto/photo_2025-08-07_02-36-56.jpg" },
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-8">
+    <div className="w-full max-w-screen-2xl mx-auto pr-0 md:pr-12 pt-4">
       <Slider {...settings}>
         {slides.map((slide) => (
           <div key={slide.id}>
-            <img src={slide.image} alt={slide.title} className=" rounded w-full max-h-[500px] h-full
-            object-cover" />
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="rounded w-full max-h-[300px] md:max-h-[500px] h-full object-cover"
+            />
           </div>
         ))}
       </Slider>

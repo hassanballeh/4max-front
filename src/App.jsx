@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom"; // ✅ use react-router-dom
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Banner from "./Components/Banner/Banner";
 import Footer from "./Components/Footer/Footer";
 import Home from "./pages/Home/Home";
@@ -13,7 +13,7 @@ import Products from "./Components/Products/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import FavouriteList from "./pages/FavouriteList";
-import { AuthProvider } from "./context/AuthContext"; // ✅ Import AuthProvider
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (

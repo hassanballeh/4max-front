@@ -19,11 +19,6 @@ const Home = () => {
 				<NewArrival />
 			</div>
 
-			{/* Products component */}
-			<div>
-				<Products />
-			</div>
-
 			{/* Contact component */}
 			<div>
 				<Contact />

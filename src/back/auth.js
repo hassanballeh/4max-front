@@ -14,6 +14,10 @@ export const loginUser = async (email, password) => {
 };
 
 export const registerUser = async (userData) => {
-  const res = await api.post("/auth/register", userData);
-  return res.data;
+  try {
+    const res = await api.post("/auth/register", userData);
+    return res;
+  } catch (error) {
+    throw new Error(error.response.data.errorMessage);
+  }
 };

@@ -9,9 +9,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setIsLoading(true);
     try {
       const res = await loginUser(email, password);
       authLogin(res.access_token);
@@ -20,6 +23,8 @@ const Login = () => {
     } catch (err) {
       // console.log(err);
       setError("Invalid email or password");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -30,26 +35,32 @@ const Login = () => {
         <h4 className="text-2xl sm:text-3xl font-bold capitalize text-center mb-12">
           Sign in to <span className="uppercase">4max</span>
         </h4>
-
+        {error && (
+          <p className="text-red-600 my-4 text-center font-semibold">{error}</p>
+        )}
         {/* Form */}
-        <form className="w-full flex flex-col gap-5">
+        <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit}>
           {/* Email input */}
           <div className="w-full h-[47px] border-b-2 border-[#9d9d9d]">
             <input
+              className="w-full h-full border-none outline-none text-base"
               type="email"
               placeholder="Enter your email..."
               required
-              className="w-full h-full border-none outline-none text-base"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           {/* Password input */}
           <div className="w-full h-[47px] border-b-2 border-[#9d9d9d]">
             <input
+              className="w-full h-full border-none outline-none text-base"
               type="password"
               placeholder="Enter your password..."
               required
-              className="w-full h-full border-none outline-none text-base"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -57,9 +68,9 @@ const Login = () => {
           <div className="w-full flex justify-center">
             <button
               type="submit"
-              className="max-w-[750px] w-full h-[55px] bg-black text-white text-lg sm:text-xl font-semibold capitalize rounded-lg mt-6"
+              className="max-w-[750px] w-full h-[55px] bg-black text-white text-lg sm:text-xl font-semibold capitalize rounded-lg mt-6 cursor-pointer"
             >
-              Sign In
+              {isLoading ? "Signing In ..." : "Sign In"}
             </button>
           </div>
         </form>

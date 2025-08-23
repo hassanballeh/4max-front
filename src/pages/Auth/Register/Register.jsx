@@ -24,9 +24,10 @@ const Register = () => {
     setError(null);
     setIsLoading(true);
     try {
-      await registerUser(formData);
-      const res = await loginUser(email, password);
-      authLogin(res.access_token);
+      const response = await registerUser(formData);
+      console.log(response.status);
+      // setInterval(res, 5000);
+
       navigate("/");
     } catch (error) {
       console.log("reg", error.message);

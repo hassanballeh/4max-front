@@ -86,7 +86,7 @@ const Register = () => {
           <div className="w-full flex justify-center">
             <button
               type="submit"
-              className="max-w-[750px] w-full h-[55px] bg-black text-white text-lg sm:text-xl font-semibold rounded-lg mt-6"
+              className="max-w-[750px] w-full h-[55px] bg-black text-white text-lg sm:text-xl font-semibold rounded-lg mt-6 cursor-pointer"
             >
               {isLoading ? "Signing Up ..." : "Sign Up"}
             </button>
@@ -97,7 +97,7 @@ const Register = () => {
           <p className="text-center text-black text-sm sm:text-base">
             Already have an account?{" "}
             <Link to="/login" className=" underline font-medium">
-              Login
+              Sign In
             </Link>
           </p>
         </div>

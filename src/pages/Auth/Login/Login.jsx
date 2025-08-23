@@ -76,13 +76,13 @@ const Login = () => {
         </form>
 
         {/* Register Link */}
-        <div className="w-full flex justify-center mt-4">
-          <Link
-            to="/register"
-            className="max-w-[750px] w-full h-[40px] border-2 border-black text-black text-lg font-semibold rounded-lg flex items-center justify-center"
-          >
-            Register Now
-          </Link>
+        <div className="w-full flex justify-center mt-8">
+          <p className="text-center text-black text-sm sm:text-base">
+            You don’t have an account?{" "}
+            <Link to="/Register" className=" underline font-medium">
+              Sign Up
+            </Link>
+          </p>
         </div>
       </div>
     </div>

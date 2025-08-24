@@ -29,10 +29,8 @@ const SliderComponent = () => {
             <img
               src={slide.image}
               alt={slide.title}
-              className="rounded w-full max-h-[300px] md:max-h-[500px] h-full object-cover"
-            />
-          </div>
-        ))}
+              className="rounded w-full max-h-[300px] md:max-h-[500px] h-full object-cover"/>
+          </div>))}
       </Slider>
     </div>
   );

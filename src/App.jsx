@@ -13,6 +13,7 @@ import Products from "./Components/Products/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import FavouriteList from "./pages/FavouriteList";
+import Checkout from "./pages/Checkout";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/product-details" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/favouriteList" element={<FavouriteList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

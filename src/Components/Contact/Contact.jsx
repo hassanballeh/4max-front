@@ -15,14 +15,12 @@ const Contact = () => {
     <div className="w-full flex flex-col items-center mb-20 pt-24 px-4">
       <section id="contact" className="scroll-mt-24 mb-6">
         <h3 className="text-3xl md:text-5xl text-[#484848] font-semibold text-center capitalize">
-          Follow us on Instagram
-        </h3>
+          Follow us on Instagram</h3>
       </section>
 
       <p className="text-base text-[#8a8a8a] text-center max-w-3xl mb-12">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi numquam perspiciatis veniam laudantium eligendi.
-        Consequatur eaque vero officia atque voluptatum nulla harum? Quam dolorum sunt nesciunt.
-      </p>
+        Consequatur eaque vero officia atque voluptatum nulla harum? Quam dolorum sunt nesciunt. </p>
 
       <div className="flex items-center px-0 lg:px-38">
         {followers.map((follower) => (
@@ -30,10 +28,8 @@ const Contact = () => {
             <img
               src={follower.image}
               alt={`Instagram ${follower.id}`}
-              className="w-100 h-full object-cover "
-            />
-          </div>
-        ))}
+              className="w-100 h-full object-cover"/>
+          </div>))}
       </div>
     </div>
   );

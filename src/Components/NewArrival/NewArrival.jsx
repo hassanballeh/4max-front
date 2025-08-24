@@ -13,42 +13,14 @@ const NewArrival = () => {
   <div className="w-full px-10 sm:px-10 md:w-1/2 flex flex-col items-center md:items-start mb-1 pl-12">
     <section id="new-arrivals" className="scroll-mt-24 mb-6">
       <h3 className="text-3xl md:text-5xl text-[#484848] font-semibold capitalize mt-4">
-        New Arrival!
-      </h3>
+        New Arrival!</h3>
     </section>
 
     <p className="text-base text-[#8a8a8a] mb-8 max-w-[444px]">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus laborum perferendis omnis numquam hic laudantium quod inventore ad autem deserunt.
     </p>
 
-    <Link
-      to="/products"
-      className="text-base text-white capitalize px-6 py-2.5 bg-black rounded-lg"
-    >
-      Buy Now
-    </Link>
-
-    {/* Countdown Timer */}
-    <div className="mt-10">
-      <h5 className="text-2xl text-[#484848] font-medium capitalize mb-4">
-        Hurry, before it's too late!
-      </h5>
-      <div className="grid grid-cols-4 gap-6">
-        {['02', '06', '45', '57'].map((val, i) => {
-          const labels = ['Days', 'Hr', 'Mins', 'Secs'];
-          return (
-            <div key={i} className="flex flex-col items-center">
-              <div className="w-20 h-20 bg-white shadow rounded-sm flex items-center justify-center text-2xl text-[#484848]">
-                {val}
-              </div>
-              <p className="text-lg text-[#484848] capitalize mt-2">
-                {labels[i]}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <Link to="/products" className="text-base text-white capitalize px-6 py-2.5 bg-black rounded-lg">Buy Now</Link>
   </div>
 
 

@@ -53,7 +53,7 @@ const ConfirmationCode = () => {
             <button
               type="button"
               onClick={() => alert("Code resent!")}
-              className="text-blue-600 underline cursor-pointer"
+              className="text-black underline cursor-pointer"
             >
               Resend now
             </button>

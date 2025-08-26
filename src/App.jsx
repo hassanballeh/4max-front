@@ -8,11 +8,13 @@ import Navbar from "./Components/Navbar/Navbar";
 import Register from "./pages/Auth/Register/Register";
 import Login from "./pages/Auth/Login/Login";
 import ConfirmationCode from "./pages/Auth/ConfirmationCode/ConfirmationCode";
-import Admin from "./pages/Auth/Admin/Admin";
+import AdminLogin from "./pages/Auth/Admin/AdminLogin";
 import Products from "./Components/Products/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import FavouriteList from "./pages/FavouriteList";
+import Checkout from "./pages/Checkout";
+import AdminPage from "./pages/Auth/Admin/AdminPage";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -25,11 +27,13 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/product-details" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/favouriteList" element={<FavouriteList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/confirmationCode" element={<ConfirmationCode />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/confirmation-code" element={<ConfirmationCode />} />
+          <Route path="/adminLogin" element={<AdminLogin />} />
+          <Route path="/adminPage" element={<AdminPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

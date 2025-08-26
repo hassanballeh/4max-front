@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const Admin = () => {
+const AdminLogin = () => {
     return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <div className="w-full max-w-3xl border border-black rounded-xl shadow-md p-6 sm:p-10 bg-white">
@@ -47,4 +47,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminLogin;

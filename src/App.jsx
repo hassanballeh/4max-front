@@ -28,7 +28,7 @@ function App() {
           <Route path="/favouriteList" element={<FavouriteList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/confirmation-code" element={<ConfirmationCode />} />
+          <Route path="/confirmationCode" element={<ConfirmationCode />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
         <Footer />

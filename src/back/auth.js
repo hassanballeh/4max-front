@@ -1,23 +1,80 @@
 // src/api/auth.js
 import api from "../api";
+import apiSecurity from "../../apiSecurity";
 
 export const loginUser = async (email, password) => {
   try {
-    const res = await api.post("/auth/login", { email, password });
+    const res = await apiSecurity.post("/auth/login", { email, password });
+    console.log("e: ", res);
+    return res.data;
+  } catch (error) {
+    console.log(error.status);
+    throw new Error(error.status);
+  }
+};
+export const loginAdmin = async ({ email, password }) => {
+  try {
+    const res = await apiSecurity.post("/auth/loginAdmin", { email, password });
     console.log("e: ", res);
     return res.data;
   } catch (error) {
     console.log(error);
   }
-
-  return res.data; // expecting { token, user }
 };
-
 export const registerUser = async (userData) => {
   try {
     const res = await api.post("/auth/register", userData);
     return res;
   } catch (error) {
-    throw new Error(error.response.data.errorMessage);
+    console.log(error);
+    throw new Error(error.response.data.errorMessage || error.response.data);
+  }
+};
+export const checkCode = async (userData) => {
+  try {
+    const res = await api.post("/email/checkCode", userData);
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.response || error.response.data);
+  }
+};
+export const sendCode = async (userData) => {
+  try {
+    const res = await api.post("/email/sendCode", userData);
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.response || error.response.data);
+  }
+};
+export const getUserInfo = async () => {
+  try {
+    const res = await api.get("/auth/userInfo");
+    // console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+    // throw new Error(error.response || error.response.data);
+  }
+};
+export const getAccessToken = async () => {
+  try {
+    const res = await apiSecurity.post("/auth/refreshToken");
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+    // throw new Error(error.response || error.response.data);
+  }
+};
+export const logout = async () => {
+  try {
+    const res = await apiSecurity.post("/auth/logout");
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+    // throw new Error(error.response || error.response.data);
   }
 };

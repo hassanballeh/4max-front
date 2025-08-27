@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
-import { loginUser } from "../../../back/auth";
+import { loginUser, getUserInfo } from "../../../back/auth";
 const Login = () => {
-  const { login: authLogin } = useAuth();
+  const { login: authLogin, userInfoFun } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -17,11 +17,23 @@ const Login = () => {
     setIsLoading(true);
     try {
       const res = await loginUser(email, password);
+      const userData = await getUserInfo();
+      userInfoFun(userData.data);
+      console.log("resfas");
       authLogin(res.access_token);
       console.log(res);
-      navigate("/"); // redirect after login success
+      navigate("/");
     } catch (err) {
-      // console.log(err);
+      if (err.message == 403) {
+        navigate("/confirmationCode", {
+          state: {
+            email: email,
+            password: password,
+            username: localStorage.getItem("username"),
+          },
+        });
+      }
+      console.log("sadas", err.message);
       setError("Invalid email or password");
     } finally {
       setIsLoading(false);

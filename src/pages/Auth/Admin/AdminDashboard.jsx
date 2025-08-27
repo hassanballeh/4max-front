@@ -1,98 +1,93 @@
-import { useState } from 'react';
-import ProductDashboard from './ProductDashboard';
-import OrderAdmin from './OrderAdmin';
-import UsersDashboard from './UsersDashboard';
-const ProductsPage = () => (
-  <div className="p-6">
-				<ProductDashboard />
-  </div>
-);
-
-const OrdersPage = () => (
-  <div className="p-6">
-				<OrderAdmin />
-  </div>
-);
-
-const UsersPage = () => (
-  <div className="p-6">
-				<UsersDashboard />
-  </div>
-);
-
+import { useNavigate } from "react-router-dom";
+import { Package, ShoppingCart, Users, LogOut } from "lucide-react";
+import { logout } from "../../../back/auth";
+import { useAuth } from "../../../context/AuthContext";
 const AdminDashboard = () => {
-  const [activeItem, setActiveItem] = useState('products');
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const navigate = useNavigate();
+  const { logout: logoutAdmin } = useAuth();
+  const handleNavigation = (route) => {
+    navigate(route);
+  };
 
-  const menuItems = [
-    { id: 'products', label: 'Products', icon: '📦' },
-    { id: 'orders', label: 'Orders', icon: '📋' },
-    { id: 'users', label: 'Users', icon: '👥' }
-  ];
-
-  const renderContent = () => {
-    switch(activeItem) {
-      case 'products':
-        return <ProductsPage />;
-      case 'orders':
-        return <OrdersPage />;
-      case 'users':
-        return <UsersPage />;
-      default:
-        return <ProductsPage />;
+  const handleLogout = async () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      await logout();
+      navigate("/adminLogin");
+      logoutAdmin();
+      console.log("Logging out...");
+      // For example: localStorage.removeItem('authToken');
+      // navigate('/login');
     }
   };
 
+  const menuItems = [
+    {
+      title: "Products",
+      description: "Manage your product catalog",
+      icon: Package,
+      route: "/admin/products",
+      color: "bg-blue-500 hover:bg-blue-600",
+    },
+    {
+      title: "Orders",
+      description: "View and manage orders",
+      icon: ShoppingCart,
+      route: "/admin/orders",
+      color: "bg-green-500 hover:bg-green-600",
+    },
+  ];
+
   return (
-    <div className="flex h-screen bg-gray-100">
-
-      <div className={`bg-gray-900 text-white p-4 flex flex-col transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="flex items-center justify-between mb-8">
-          <h1 className={`text-xl font-bold ${isCollapsed ? 'hidden' : 'block'}`}>4MAX</h1>
-          <button 
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-2 rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            {isCollapsed ? '→' : '←'}
-          </button>
-        </div>
-
-
-        <nav className="flex-1">
-          <h2 className={`text-gray-400 text-xs uppercase mb-2 ${isCollapsed ? 'hidden' : 'block'}`}>Dashboard</h2>
-          <ul className="space-y-1">
-            {menuItems.map(item => (
-              <li key={item.id}>
-                <button 
-                  onClick={() => setActiveItem(item.id)}
-                  className={`w-full flex items-center p-3 rounded-lg transition-colors ${
-                    activeItem === item.id 
-                      ? 'bg-blue-600 text-white' 
-                      : 'text-gray-300 hover:bg-gray-800'
-                  }`}
-                >
-                  <span className="text-lg mr-3">{item.icon}</span>
-                  <span className={isCollapsed ? 'hidden' : 'block'}>{item.label}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className={`pt-4 border-t border-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm">AD</span>
-            </div>
-            <div>
-              <p className="text-sm font-medium">Admin User</p>
-              <p className="text-xs text-gray-400">admin@example.com</p>
-            </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-gray-900">
+              Admin Dashboard
+            </h1>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+            >
+              <LogOut size={16} />
+              Logout
+            </button>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto">
-        {renderContent()}
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Welcome to Admin Panel
+          </h2>
+          <p className="text-gray-600">Choose a section to manage</p>
+        </div>
+
+        {/* Navigation Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {menuItems.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => handleNavigation(item.route)}
+              className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-all transform hover:-translate-y-1 cursor-pointer"
+            >
+              <div className="text-center">
+                <div
+                  className={`${item.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors`}
+                >
+                  <item.icon className="text-white" size={24} />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

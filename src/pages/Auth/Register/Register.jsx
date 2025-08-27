@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser, registerUser } from "../../../back/auth";
+import { registerUser } from "../../../back/auth";
 import { useAuth } from "../../../context/AuthContext";
 const Register = () => {
   const navigate = useNavigate();
@@ -26,9 +26,14 @@ const Register = () => {
     try {
       const response = await registerUser(formData);
       console.log(response.status);
-      // setInterval(res, 5000);
-
-      navigate("/");
+      localStorage.setItem("username", formData.username);
+      navigate("/confirmationCode", {
+        state: {
+          email: formData.email,
+          password: formData.password,
+          username: formData.username,
+        },
+      });
     } catch (error) {
       console.log("reg", error.message);
       setError(error.message);

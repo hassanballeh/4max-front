@@ -1,17 +1,17 @@
 // src/api/api.js
 import axios from "axios";
 
-const api = axios.create({
+const apiSecurity = axios.create({
   baseURL: "http://localhost:8080", // Change to your backend
+  withCredentials: true,
   // withCredentials: true, // optional if using cookies
   headers: {
     "Content-Type": "application/json",
-    // withCredentials: true,
   },
 });
 
-api.interceptors.request.use((config) => {
+apiSecurity.interceptors.request.use((config) => {
   return config;
 });
 
-export default api;
+export default apiSecurity;

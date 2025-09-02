@@ -70,3 +70,29 @@ export const deleteProduct = async (id) => {
     throw new Error(errorMessage);
   }
 };
+export const getVariantById = async (id) => {
+  try {
+    const res = await apiToken.get(`/api/products/variant/${id}`);
+    return res.data; // Changed from return res to return res.data
+  } catch (error) {
+    const errorMessage =
+      error.response?.data?.message ||
+      error.response?.data ||
+      error.message ||
+      "Failed to delete product";
+    throw new Error(errorMessage);
+  }
+};
+export const getVariantByDetails = async (data) => {
+  try {
+    const res = await apiToken.post(`/api/products/variant/`, data);
+    return res.data; // Changed from return res to return res.data
+  } catch (error) {
+    const errorMessage =
+      error.response?.data?.message ||
+      error.response?.data ||
+      error.message ||
+      "Failed to delete product";
+    throw new Error(errorMessage);
+  }
+};

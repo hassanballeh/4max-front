@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { FaBars, FaTimes } from "react-icons/fa";
 import {
@@ -9,13 +9,16 @@ import {
 } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 import { logout, getUserInfo } from "../../back/auth"; // example import
-
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { useCart } from "../../context/CartContext";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { token, logout: logoutUser } = useAuth();
   const [loadingUsername, setLoadingUsername] = useState(false);
   const [username, setUsername] = useState("");
   const toggleMenu = () => setIsOpen(!isOpen);
+  const { totalItems } = useCart();
+  const navigate = useNavigate();
 
   // Fetch username if authenticated and not already set
   useEffect(() => {
@@ -127,15 +130,20 @@ const Navbar = () => {
                   <HiOutlineHeart />
                 </NavLink>
 
-                {/* Shopping Basket Icon */}
-                <NavLink
-                  to="/basket"
-                  onClick={() => setIsOpen(false)}
-                  className="text-[#484848] hover:text-black transition text-xl"
-                  aria-label="Shopping Basket"
-                >
-                  <HiOutlineShoppingBag />
-                </NavLink>
+                {/* Cart Icon */}
+                <div className="flex items-center">
+                  <button
+                    onClick={() => navigate("/cart")}
+                    className="relative p-2 text-gray-400 hover:text-gray-500"
+                  >
+                    <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
+                    {totalItems > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {totalItems > 99 ? "99+" : totalItems}
+                      </span>
+                    )}
+                  </button>
+                </div>
 
                 {/* Logout Icon */}
                 <button

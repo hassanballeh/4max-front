@@ -584,7 +584,7 @@ const ProductEditPage = () => {
                     {currentVariant.images.map((image, index) => (
                       <div key={index} className="relative">
                         <img
-                          src={image}
+                          src={image.base64Data}
                           alt={`Variant ${index + 1}`}
                           className="w-16 h-16 object-cover rounded border"
                         />

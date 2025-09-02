@@ -21,10 +21,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUser = async () => {
       if (token) {
-<<<<<<< HEAD
         console.log("asd");
-=======
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
         try {
           setLoadingUsername(true);
           const res = await getUserInfo();
@@ -144,11 +141,7 @@ const Navbar = () => {
                 {/* Logout Icon */}
                 <button
                   onClick={handleLogout}
-<<<<<<< HEAD
                   className="text-[#484848] hover:text-red-600 transition text-xl cursor-pointer"
-=======
-                  className="text-[#484848] hover:text-red-600 transition text-xl"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   aria-label="Logout"
                 >
                   <HiOutlineLogout />

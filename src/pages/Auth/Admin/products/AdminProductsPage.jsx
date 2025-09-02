@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Eye, X, Save, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import Select from "react-select";
-=======
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
 import {
   createProduct,
   getAllProducts,
@@ -16,7 +13,6 @@ import {
   validateImage,
 } from "./utils/imageUtils"; // Adjust the path as needed
 
-<<<<<<< HEAD
 // Options for react-select
 const seasonOptions = [
   { value: "SUMMER", label: "Summer" },
@@ -74,8 +70,6 @@ const customSelectStyles = {
   }),
 };
 
-=======
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
 const AdminProductsPage = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -273,18 +267,10 @@ const AdminProductsPage = () => {
       base64Images: currentVariant.base64Images.filter((_, i) => i !== index),
     });
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   console.log(formData.name);
   console.log(formData.description);
   console.log(formData.season);
   console.log(formData.variants.length);
-<<<<<<< HEAD
-
-=======
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   // Updated saveProduct function using the utility
   const saveProduct = async () => {
     if (
@@ -329,7 +315,6 @@ const AdminProductsPage = () => {
     return variants.length;
   };
 
-<<<<<<< HEAD
   // Helper functions to get selected option objects
   const getSelectedSeasonOption = () => {
     return (
@@ -350,8 +335,6 @@ const AdminProductsPage = () => {
     );
   };
 
-=======
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -494,11 +477,7 @@ const AdminProductsPage = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-<<<<<<< HEAD
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-=======
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   placeholder="Enter product name"
                   disabled={creating}
                 />
@@ -507,7 +486,6 @@ const AdminProductsPage = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Season
                 </label>
-<<<<<<< HEAD
                 <Select
                   value={getSelectedSeasonOption()}
                   onChange={(selectedOption) =>
@@ -521,17 +499,6 @@ const AdminProductsPage = () => {
                   placeholder="Select season"
                   isDisabled={creating}
                   isClearable
-=======
-                <input
-                  type="text"
-                  value={formData.season}
-                  onChange={(e) =>
-                    setFormData({ ...formData, season: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g., Summer 2024"
-                  disabled={creating}
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                 />
               </div>
               <div className="md:col-span-2">
@@ -543,11 +510,7 @@ const AdminProductsPage = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
-<<<<<<< HEAD
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-=======
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   rows="3"
                   placeholder="Enter product description"
                   disabled={creating}
@@ -588,11 +551,7 @@ const AdminProductsPage = () => {
                         price: e.target.value,
                       })
                     }
-<<<<<<< HEAD
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-=======
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                     placeholder="0.00"
                     disabled={creating}
                   />
@@ -610,11 +569,7 @@ const AdminProductsPage = () => {
                         stock: e.target.value,
                       })
                     }
-<<<<<<< HEAD
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-=======
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                     placeholder="0"
                     disabled={creating}
                   />
@@ -623,7 +578,6 @@ const AdminProductsPage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Color
                   </label>
-<<<<<<< HEAD
                   <Select
                     value={getSelectedColorOption()}
                     onChange={(selectedOption) =>
@@ -637,27 +591,12 @@ const AdminProductsPage = () => {
                     placeholder="Select color"
                     isDisabled={creating}
                     isClearable
-=======
-                  <input
-                    type="text"
-                    value={currentVariant.color}
-                    onChange={(e) =>
-                      setCurrentVariant({
-                        ...currentVariant,
-                        color: e.target.value,
-                      })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="e.g., Red"
-                    disabled={creating}
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Size
                   </label>
-<<<<<<< HEAD
                   <Select
                     value={getSelectedSizeOption()}
                     onChange={(selectedOption) =>
@@ -671,20 +610,6 @@ const AdminProductsPage = () => {
                     placeholder="Select size"
                     isDisabled={creating}
                     isClearable
-=======
-                  <input
-                    type="text"
-                    value={currentVariant.size}
-                    onChange={(e) =>
-                      setCurrentVariant({
-                        ...currentVariant,
-                        size: e.target.value,
-                      })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="e.g., M, L, XL"
-                    disabled={creating}
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   />
                 </div>
               </div>
@@ -699,11 +624,7 @@ const AdminProductsPage = () => {
                   multiple
                   accept="image/*"
                   onChange={handleImageUpload}
-<<<<<<< HEAD
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none  focus:border-transparent"
-=======
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   disabled={creating || imageProcessing}
                 />
 
@@ -814,12 +735,8 @@ const AdminProductsPage = () => {
             <div className="mt-8 flex justify-end">
               <button
                 onClick={() => saveProduct()}
-<<<<<<< HEAD
                 className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
                 disabled={creating}
-=======
-                className="bg-blue-600 hover:bg-blue-700  text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
               >
                 {creating ? (
                   <>

@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { getAllProducts } from "../../back/products";
-<<<<<<< HEAD
 import { toggleFavoriteProduct } from "../../back/auth";
-=======
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
 
 const Products = () => {
   const [products, setProducts] = useState([]);

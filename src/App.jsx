@@ -78,11 +78,7 @@ function App() {
             }
           />
           <Route
-<<<<<<< HEAD
             path="/product-details/:id"
-=======
-            path="/product-details"
->>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
             element={
               <MainLayout>
                 <ProductDetails />

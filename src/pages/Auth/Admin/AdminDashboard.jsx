@@ -35,6 +35,16 @@ const AdminDashboard = () => {
       route: "/admin/orders",
       color: "bg-green-500 hover:bg-green-600",
     },
+<<<<<<< HEAD
+=======
+    {
+      title: "Users",
+      description: "Manage user accounts",
+      icon: Users,
+      route: "/admin/users",
+      color: "bg-purple-500 hover:bg-purple-600",
+    },
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   ];
 
   return (
@@ -67,7 +77,11 @@ const AdminDashboard = () => {
         </div>
 
         {/* Navigation Cards */}
+<<<<<<< HEAD
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+=======
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
           {menuItems.map((item, index) => (
             <div
               key={index}

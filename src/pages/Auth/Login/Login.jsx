@@ -17,7 +17,6 @@ const Login = () => {
     setIsLoading(true);
     try {
       const res = await loginUser(email, password);
-
       authLogin(res.access_token);
       console.log(res);
       navigate("/");

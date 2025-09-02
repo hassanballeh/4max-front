@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, X, Plus, Edit, Trash2, Loader2 } from "lucide-react";
+<<<<<<< HEAD
 import Select from "react-select";
 import { getProductById, updateProduct } from "../../../../back/products";
 
@@ -61,6 +62,10 @@ const customSelectStyles = {
   }),
 };
 
+=======
+import { getProductById, updateProduct } from "../../../../back/products";
+
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
 const ProductEditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -74,14 +79,22 @@ const ProductEditPage = () => {
     season: "",
     variants: [],
   });
+<<<<<<< HEAD
 
+=======
+  console.log(formData);
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   const [currentVariant, setCurrentVariant] = useState({
     id: "",
     price: "",
     stock: "",
     color: "",
     size: "",
+<<<<<<< HEAD
     images: [],
+=======
+    base64Images: [],
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   });
 
   const [editingVariantIndex, setEditingVariantIndex] = useState(null);
@@ -90,7 +103,11 @@ const ProductEditPage = () => {
   useEffect(() => {
     loadProduct();
   }, [id]);
+<<<<<<< HEAD
   console.log("ss:", formData);
+=======
+
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   const loadProduct = async () => {
     try {
       setLoading(true);
@@ -196,7 +213,11 @@ const ProductEditPage = () => {
       stock: variant.stock.toString(),
       color: variant.color,
       size: variant.size,
+<<<<<<< HEAD
       images: [...(variant.images || [])],
+=======
+      images: [...variant.images],
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
     });
     setEditingVariantIndex(index);
     setShowVariantForm(true);
@@ -221,10 +242,17 @@ const ProductEditPage = () => {
       });
     });
 
+<<<<<<< HEAD
     Promise.all(promises).then((images) => {
       setCurrentVariant({
         ...currentVariant,
         images: [...currentVariant.images, ...images],
+=======
+    Promise.all(promises).then((base64Images) => {
+      setCurrentVariant({
+        ...currentVariant,
+        images: [...currentVariant.images, ...base64Images],
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
       });
     });
   };
@@ -236,6 +264,7 @@ const ProductEditPage = () => {
     });
   };
 
+<<<<<<< HEAD
   // Helper functions to get selected option objects
   const getSelectedSeasonOption = () => {
     return (
@@ -256,6 +285,8 @@ const ProductEditPage = () => {
     );
   };
 
+=======
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -293,7 +324,11 @@ const ProductEditPage = () => {
               formData.variants.length === 0 ||
               saving
             }
+<<<<<<< HEAD
             className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
+=======
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
           >
             {saving ? (
               <>
@@ -325,7 +360,11 @@ const ProductEditPage = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
+<<<<<<< HEAD
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+=======
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                 placeholder="Enter product name"
                 disabled={saving}
               />
@@ -334,6 +373,7 @@ const ProductEditPage = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Season
               </label>
+<<<<<<< HEAD
               <Select
                 value={getSelectedSeasonOption()}
                 onChange={(selectedOption) =>
@@ -347,6 +387,17 @@ const ProductEditPage = () => {
                 placeholder="Select season"
                 isDisabled={saving}
                 isClearable
+=======
+              <input
+                type="text"
+                value={formData.season}
+                onChange={(e) =>
+                  setFormData({ ...formData, season: e.target.value })
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="e.g., Summer 2024"
+                disabled={saving}
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
               />
             </div>
             <div className="md:col-span-2">
@@ -358,7 +409,11 @@ const ProductEditPage = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
+<<<<<<< HEAD
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+=======
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                 rows="4"
                 placeholder="Enter product description"
                 disabled={saving}
@@ -379,7 +434,11 @@ const ProductEditPage = () => {
                 setShowVariantForm(true);
               }}
               disabled={saving}
+<<<<<<< HEAD
               className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
+=======
+              className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
             >
               <Plus size={16} />
               Add Variant
@@ -423,14 +482,22 @@ const ProductEditPage = () => {
                     <button
                       onClick={() => editVariant(index)}
                       disabled={saving}
+<<<<<<< HEAD
                       className="text-blue-600 hover:bg-blue-50 p-2 rounded-lg transition-colors disabled:text-gray-400 cursor-pointer"
+=======
+                      className="text-blue-600 hover:bg-blue-50 p-2 rounded-lg transition-colors disabled:text-gray-400"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                     >
                       <Edit size={16} />
                     </button>
                     <button
                       onClick={() => removeVariant(index)}
                       disabled={saving}
+<<<<<<< HEAD
                       className="text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors disabled:text-gray-400 cursor-pointer"
+=======
+                      className="text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors disabled:text-gray-400"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                     >
                       <Trash2 size={16} />
                     </button>
@@ -460,7 +527,11 @@ const ProductEditPage = () => {
                     resetVariantForm();
                     setShowVariantForm(false);
                   }}
+<<<<<<< HEAD
                   className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+=======
+                  className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                 >
                   <X size={16} />
                 </button>
@@ -481,7 +552,11 @@ const ProductEditPage = () => {
                         price: e.target.value,
                       })
                     }
+<<<<<<< HEAD
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+=======
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                     placeholder="0.00"
                     disabled={saving}
                   />
@@ -499,7 +574,11 @@ const ProductEditPage = () => {
                         stock: e.target.value,
                       })
                     }
+<<<<<<< HEAD
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+=======
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                     placeholder="0"
                     disabled={saving}
                   />
@@ -508,6 +587,7 @@ const ProductEditPage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Color
                   </label>
+<<<<<<< HEAD
                   <Select
                     value={getSelectedColorOption()}
                     onChange={(selectedOption) =>
@@ -521,12 +601,27 @@ const ProductEditPage = () => {
                     placeholder="Select color"
                     isDisabled={saving}
                     isClearable
+=======
+                  <input
+                    type="text"
+                    value={currentVariant.color}
+                    onChange={(e) =>
+                      setCurrentVariant({
+                        ...currentVariant,
+                        color: e.target.value,
+                      })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., Red"
+                    disabled={saving}
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Size
                   </label>
+<<<<<<< HEAD
                   <Select
                     value={getSelectedSizeOption()}
                     onChange={(selectedOption) =>
@@ -540,6 +635,20 @@ const ProductEditPage = () => {
                     placeholder="Select size"
                     isDisabled={saving}
                     isClearable
+=======
+                  <input
+                    type="text"
+                    value={currentVariant.size}
+                    onChange={(e) =>
+                      setCurrentVariant({
+                        ...currentVariant,
+                        size: e.target.value,
+                      })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., M, L, XL"
+                    disabled={saving}
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   />
                 </div>
               </div>
@@ -554,7 +663,11 @@ const ProductEditPage = () => {
                   multiple
                   accept="image/*"
                   onChange={handleImageUpload}
+<<<<<<< HEAD
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+=======
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
                   disabled={saving}
                 />
                 {currentVariant.images.length > 0 && (
@@ -588,7 +701,11 @@ const ProductEditPage = () => {
                   !currentVariant.size ||
                   saving
                 }
+<<<<<<< HEAD
                 className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
+=======
+                className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors"
+>>>>>>> 35b288d893791333dc1a07037d2a2e39f9eabe0d
               >
                 {editingVariantIndex !== null
                   ? "Update Variant"

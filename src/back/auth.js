@@ -61,11 +61,10 @@ export const getUserInfo = async () => {
 export const getAccessToken = async () => {
   try {
     const res = await apiSecurity.post("/auth/refreshToken");
-    console.log(res);
     return res.data;
   } catch (error) {
-    console.log(error);
-    // throw new Error(error.response || error.response.data);
+    // console.log(error);
+    throw new Error(error.response || error.response.data);
   }
 };
 export const logout = async () => {

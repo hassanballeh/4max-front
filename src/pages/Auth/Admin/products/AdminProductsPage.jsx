@@ -8,9 +8,8 @@ import {
   deleteProduct,
 } from "../../../../back/products";
 import {
-  processFilesToBase64,
+  createProcessFilesToBase64,
   ensureBase64Images,
-  validateImage,
 } from "./utils/imageUtils"; // Adjust the path as needed
 
 // Options for react-select
@@ -235,7 +234,7 @@ const AdminProductsPage = () => {
       setImageProcessing(true);
 
       // Process images with validation and convert to base64
-      const base64Images = await processFilesToBase64(files, {
+      const images = await createProcessFilesToBase64(files, {
         allowedTypes: [
           "image/jpeg",
           "image/jpg",
@@ -248,7 +247,7 @@ const AdminProductsPage = () => {
 
       setCurrentVariant({
         ...currentVariant,
-        base64Images: [...currentVariant.base64Images, ...base64Images],
+        base64Images: [...currentVariant.base64Images, ...images],
       });
 
       // Clear the file input
@@ -267,7 +266,7 @@ const AdminProductsPage = () => {
       base64Images: currentVariant.base64Images.filter((_, i) => i !== index),
     });
   };
-  console.log(formData.name);
+  console.log(formData);
   console.log(formData.description);
   console.log(formData.season);
   console.log(formData.variants.length);
@@ -283,17 +282,9 @@ const AdminProductsPage = () => {
         setCreating(true);
         console.log("ews");
 
-        // Ensure all images are properly converted to base64
-        const processedVariants = await ensureBase64Images(formData.variants);
+        console.log("Product data being sent to API:", formData);
 
-        const productData = {
-          ...formData,
-          variants: processedVariants,
-        };
-
-        console.log("Product data being sent to API:", productData);
-
-        const newProduct = await createProduct(productData);
+        const newProduct = await createProduct(formData);
         setProducts([...products, newProduct]);
         setShowCreateForm(false);
         resetForm();

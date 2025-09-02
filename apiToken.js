@@ -26,7 +26,6 @@ apiToken.interceptors.response.use(
     // if access_token expired
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      console.log("api ", error.response?.status);
 
       try {
         // Call backend refresh endpoint
@@ -34,20 +33,14 @@ apiToken.interceptors.response.use(
 
         const res = response;
         console.log("res1:", res);
-        const newAccessToken = response.data.access_token;
+        const newAccessToken = response.access_token;
         console.log("res in apitoken:", response);
         localStorage.setItem("token", newAccessToken);
 
         // Save new access token
-        //sfasf
-        // Retry original request
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axios(originalRequest);
       } catch (err) {
-        console.log("here ", err);
-        alert("asdasd");
-        // const { logout } = useAuth();
-        // Refresh token expired → logout
         localStorage.removeItem("token");
         localStorage.removeItem("adminToken");
         window.location.href = "/";

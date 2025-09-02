@@ -59,7 +59,7 @@ export const validateImage = (file, options = {}) => {
  * @param {Object} options - Validation options
  * @returns {Promise<Array>} - Array of base64 strings
  */
-export const processFilesToBase64 = async (files, options = {}) => {
+export const processFilesToBase64 = async (files, options = {}, flag = 0) => {
   const fileArray = Array.from(files);
 
   try {
@@ -70,7 +70,27 @@ export const processFilesToBase64 = async (files, options = {}) => {
     const base64Images = await Promise.all(
       fileArray.map((file) => convertFileToBase64(file))
     );
+    const images = [];
+    if (flag) {
+      base64Images.map((image) => images.push({ base64Data: image }));
+      return images;
+    }
+    return base64Images;
+  } catch (error) {
+    throw new Error(`Image processing failed: ${error.message}`);
+  }
+};
+export const createProcessFilesToBase64 = async (files, options = {}) => {
+  const fileArray = Array.from(files);
 
+  try {
+    // Validate all files first
+    fileArray.forEach((file) => validateImage(file, options));
+
+    // Convert all files to base64
+    const base64Images = await Promise.all(
+      fileArray.map((file) => convertFileToBase64(file))
+    );
     return base64Images;
   } catch (error) {
     throw new Error(`Image processing failed: ${error.message}`);
@@ -88,29 +108,29 @@ export const ensureBase64Images = async (variants) => {
   for (const variant of variants) {
     const processedImages = [];
 
-    for (const image of variant.base64Images || []) {
+    for (const image of variant.images || []) {
       // If image is already base64 string, keep it
       if (typeof image === "string" && image.startsWith("data:")) {
-        processedImages.push(image);
+        processedImages.push({ base64Data: image });
       }
       // If it's a File object, convert it to base64
       else if (image instanceof File) {
         const base64 = await convertFileToBase64(image);
-        processedImages.push(base64);
+        processedImages.push({ base64Data: base64 });
       }
       // If it's already a base64 string without data prefix, keep it
       else if (typeof image === "string") {
-        processedImages.push(image);
+        processedImages.push({ base64Data: image });
       }
       // Skip invalid image types
       else {
         console.warn("Skipping invalid image type:", typeof image);
       }
     }
-
+    console.log("dd ", processedImages);
     processedVariants.push({
       ...variant,
-      base64Images: processedImages,
+      images: processedImages,
     });
   }
 

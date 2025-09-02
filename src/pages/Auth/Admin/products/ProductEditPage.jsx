@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, X, Plus, Edit, Trash2, Loader2 } from "lucide-react";
 import Select from "react-select";
 import { getProductById, updateProduct } from "../../../../back/products";
+import { processFilesToBase64, ensureBase64Images } from "./utils/imageUtils"; // Adjust the path as needed
 
 // Options for react-select
 const seasonOptions = [
@@ -66,6 +67,7 @@ const ProductEditPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [imageProcessing, setImageProcessing] = useState(false);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -75,7 +77,6 @@ const ProductEditPage = () => {
     variants: [],
   });
   const [currentVariant, setCurrentVariant] = useState({
-    id: "",
     price: "",
     stock: "",
     color: "",
@@ -112,7 +113,6 @@ const ProductEditPage = () => {
 
   const resetVariantForm = () => {
     setCurrentVariant({
-      id: "",
       price: "",
       stock: "",
       color: "",
@@ -131,6 +131,7 @@ const ProductEditPage = () => {
     ) {
       try {
         setSaving(true);
+        console.log("pp ", formData);
         await updateProduct(formData, id);
         alert("Product updated successfully");
         navigate(`/admin/products/${id}`);
@@ -190,7 +191,6 @@ const ProductEditPage = () => {
   const editVariant = (index) => {
     const variant = formData.variants[index];
     setCurrentVariant({
-      id: variant.id,
       price: variant.price.toString(),
       stock: variant.stock.toString(),
       color: variant.color,
@@ -210,22 +210,39 @@ const ProductEditPage = () => {
     }
   };
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const promises = files.map((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (event) => resolve(event.target.result);
-        reader.readAsDataURL(file);
-      });
-    });
+  const handleImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-    Promise.all(promises).then((images) => {
+    try {
+      setImageProcessing(true);
+
+      // Process images with validation and convert to base64
+      const images = await processFilesToBase64(files, {
+        allowedTypes: [
+          "image/jpeg",
+          "image/jpg",
+          "image/png",
+          "image/gif",
+          "image/webp",
+        ],
+        maxSize: 5 * 1024 * 1024,
+        // 5MB
+      });
+
       setCurrentVariant({
         ...currentVariant,
         images: [...currentVariant.images, ...images],
       });
-    });
+
+      // Clear the file input
+      e.target.value = "";
+    } catch (error) {
+      console.error("Error processing images:", error);
+      alert(`Error processing images: ${error.message}`);
+    } finally {
+      setImageProcessing(false);
+    }
   };
 
   const removeImage = (index) => {
@@ -414,7 +431,7 @@ const ProductEditPage = () => {
                     </div>
                     <div className="mt-2">
                       <span className="text-sm text-gray-500">
-                        Images: {variant.base64Images?.length || 0}
+                        Images: {variant.images?.length || 0}
                       </span>
                     </div>
                   </div>
@@ -556,12 +573,18 @@ const ProductEditPage = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   disabled={saving}
                 />
+                {imageProcessing && (
+                  <div className="flex items-center gap-2 mt-2 text-blue-600">
+                    <Loader2 className="animate-spin" size={16} />
+                    <span className="text-sm">Processing images...</span>
+                  </div>
+                )}
                 {currentVariant.images.length > 0 && (
                   <div className="flex gap-2 mt-2 flex-wrap">
                     {currentVariant.images.map((image, index) => (
                       <div key={index} className="relative">
                         <img
-                          src={image.base64Data}
+                          src={image}
                           alt={`Variant ${index + 1}`}
                           className="w-16 h-16 object-cover rounded border"
                         />

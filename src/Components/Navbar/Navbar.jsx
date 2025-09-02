@@ -21,7 +21,6 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUser = async () => {
       if (token) {
-        console.log("asd");
         try {
           setLoadingUsername(true);
           const res = await getUserInfo();

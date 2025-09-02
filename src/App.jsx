@@ -21,6 +21,7 @@ import ProductEditPage from "./pages/Auth/Admin/products/ProductEditPage";
 import AdminDashboard from "./pages/Auth/Admin/AdminDashboard";
 import OrderAdmin from "./pages/Auth/Admin/OrderAdmin";
 import UsersDashboard from "./pages/Auth/Admin/UsersDashboard";
+import MyOrders from "./pages/MyOrders";
 
 const MainLayout = ({ children }) => (
   <>
@@ -208,8 +209,8 @@ function App() {
               <AdminProtectedRoute>
                 <ProductEditPage />
               </AdminProtectedRoute>
-            }
-          />
+            }/>
+          <Route path="/MyOrders" element={<MyOrders />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

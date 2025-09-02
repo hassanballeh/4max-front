@@ -52,6 +52,7 @@ export const sendCode = async (userData) => {
 export const getUserInfo = async () => {
   try {
     const res = await apiToken.get("/auth/userInfo");
+    await getAccessToken();
     // console.log(res);
     return res;
   } catch (error) {
@@ -63,7 +64,7 @@ export const getAccessToken = async () => {
   try {
     const res = await apiSecurity.post("/auth/refreshToken");
     console.log(res);
-    return res;
+    return res.data;
   } catch (error) {
     console.log(error);
     // throw new Error(error.response || error.response.data);

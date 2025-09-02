@@ -32,6 +32,8 @@ apiToken.interceptors.response.use(
         // Call backend refresh endpoint
         const response = await getAccessToken();
 
+        const res = response;
+        console.log("res1:", res);
         const newAccessToken = response.data.access_token;
         console.log("res in apitoken:", response);
         localStorage.setItem("token", newAccessToken);

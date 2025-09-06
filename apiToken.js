@@ -3,7 +3,7 @@ import axios from "axios";
 import { getAccessToken } from "./src/back/auth";
 import { useAuth } from "./src/context/AuthContext";
 const apiToken = axios.create({
-  baseURL: "https://clothes-back-production.up.railway.app", // Change to your backend
+  baseURL: "http://13.60.254.214:8080", // Change to your backend
   // withCredentials: true, // optional if using cookies
   headers: {
     "Content-Type": "application/json",

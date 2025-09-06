@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const SliderComponent = () => {
@@ -16,9 +16,9 @@ const SliderComponent = () => {
   };
 
   const slides = [
-    { id: 1, image: "bannerPhoto/IMG_5631.JPG" },
-    { id: 2, image: "bannerPhoto/photo_2_2025-07-30_22-00-59.jpg" },
-    { id: 3, image: "bannerPhoto/photo_2025-08-07_02-36-56.jpg" },
+    { id: 1, image: "../../../bannerPhoto/IMG_5631.JPG" },
+    { id: 2, image: "../../../bannerPhoto/photo_2_2025-07-30_22-00-59.jpg" },
+    { id: 3, image: "../../../bannerPhoto/photo_2025-08-07_02-36-56.jpg" },
   ];
 
   return (
@@ -29,8 +29,10 @@ const SliderComponent = () => {
             <img
               src={slide.image}
               alt={slide.title}
-              className="rounded w-full max-h-[300px] md:max-h-[500px] h-full object-cover"/>
-          </div>))}
+              className="rounded w-full max-h-[300px] md:max-h-[500px] h-full object-cover"
+            />
+          </div>
+        ))}
       </Slider>
     </div>
   );

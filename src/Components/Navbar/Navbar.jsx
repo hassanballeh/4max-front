@@ -8,7 +8,7 @@ import {
   HiOutlineLogout,
 } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
-import { logout, getUserInfo } from "../../back/auth"; // example import
+import { logout, getUserInfo } from "../../back/auth";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useCart } from "../../context/CartContext";
 const Navbar = () => {
@@ -27,6 +27,7 @@ const Navbar = () => {
         try {
           setLoadingUsername(true);
           const res = await getUserInfo();
+          console.log(res);
           const name =
             res.data.username[0].toUpperCase() + res.data.username.slice(1);
           setUsername(name);
@@ -122,7 +123,7 @@ const Navbar = () => {
 
                 {/* Favorites Icon */}
                 <NavLink
-                  to="/favorites"
+                  to="/favoriteList"
                   onClick={() => setIsOpen(false)}
                   className="text-[#484848] hover:text-red-500 transition text-xl"
                   aria-label="Favorites"
@@ -134,11 +135,11 @@ const Navbar = () => {
                 <div className="flex items-center">
                   <button
                     onClick={() => navigate("/cart")}
-                    className="relative p-2 text-gray-400 hover:text-gray-500"
+                    className="relative p-2 text-[#484848] hover:text-gray-500 cursor-pointer"
                   >
                     <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
                     {totalItems > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                         {totalItems > 99 ? "99+" : totalItems}
                       </span>
                     )}

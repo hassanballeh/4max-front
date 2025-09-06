@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080", // Change to your backend
+  baseURL: "http://13.60.254.214:8080", // Change to your backend
   // withCredentials: true, // optional if using cookies
   headers: {
     "Content-Type": "application/json",

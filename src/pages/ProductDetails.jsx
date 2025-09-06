@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { getProductById } from "../back/products"; // Assuming you have this function
 import { useCart } from "../context/CartContext"; // Import the cart context
-
+import { useAuth } from "../context/AuthContext";
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [addingToCart, setAddingToCart] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const { token } = useAuth();
 
   const colorOptions = [
     { value: "Red", label: "Red", color: "#ef4444" },
@@ -139,7 +140,7 @@ const ProductDetail = () => {
             : null,
         stock: selectedVariant.stock,
       };
-
+      console.log("car: ", quantity);
       // Add to cart using context
       addToCart(selectedVariant.id, quantity, productInfo);
 
@@ -335,7 +336,7 @@ const ProductDetail = () => {
                       key={size}
                       onClick={() => hasStock && handleSizeChange(size)}
                       disabled={!hasStock}
-                      className={`px-4 py-2 border rounded-md transition ${
+                      className={`px-4 py-2 border rounded-md transition cursor-pointer ${
                         isSelected
                           ? "bg-black text-white border-black"
                           : hasStock
@@ -371,7 +372,7 @@ const ProductDetail = () => {
                       key={color}
                       onClick={() => hasStock && handleColorChange(color)}
                       disabled={!hasStock}
-                      className={`relative w-10 h-10 rounded-full border-2 transition ${
+                      className={`relative w-10 h-10 rounded-full border-2 transition cursor-pointer ${
                         isSelected
                           ? "border-black shadow-lg"
                           : hasStock
@@ -405,7 +406,7 @@ const ProductDetail = () => {
             <div className="flex items-center mt-2 pb-8">
               <button
                 onClick={() => handleQuantityChange(-1)}
-                className="px-3 py-1 border border-gray-300 rounded-l-md bg-gray-100 hover:bg-gray-200 transition"
+                className="px-3 py-1 border border-gray-300 rounded-l-md bg-gray-100 hover:bg-gray-200 transition cursor-pointer"
                 disabled={quantity <= 1}
               >
                 -
@@ -415,7 +416,7 @@ const ProductDetail = () => {
               </span>
               <button
                 onClick={() => handleQuantityChange(1)}
-                className="px-3 py-1 border border-gray-300 rounded-r-md bg-gray-100 hover:bg-gray-200 transition"
+                className="px-3 py-1 border border-gray-300 rounded-r-md bg-gray-100 hover:bg-gray-200 transition cursor-pointer"
                 disabled={quantity >= 100}
               >
                 +
@@ -423,44 +424,46 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* Stock Info */}
-          {isVariantInCart && cartItem && (
-            <div className="mt-2 mb-4">
-              <p className="text-sm text-blue-600">
-                {cartItem.quantity} item(s) already in cart
-              </p>
-            </div>
+          {/* Add to Cart Button */}
+          {token ? (
+            <button
+              onClick={handleAddToCart}
+              disabled={
+                !selectedVariant?.stock ||
+                selectedVariant.stock === 0 ||
+                addingToCart
+              }
+              className={`mt-8 w-full py-3 px-4 rounded-md font-medium transition-colors cursor-pointer ${
+                addedToCart
+                  ? "bg-green-600 text-white"
+                  : selectedVariant?.stock > 0
+                  ? "bg-black text-white hover:bg-gray-800"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+            >
+              {addingToCart
+                ? "Adding..."
+                : addedToCart
+                ? "Added to Cart ✓"
+                : selectedVariant?.stock > 0
+                ? "Add To Cart"
+                : "Out of Stock"}
+            </button>
+          ) : (
+            <h1>
+              Long in Now To Add Product To Your Cart{"  "}
+              <button
+                onClick={() => navigate("/login")}
+                className=" cursor-pointer text-blue-600"
+              >
+                Login
+              </button>
+            </h1>
           )}
 
-          {/* Add to Cart Button */}
-          <button
-            onClick={handleAddToCart}
-            disabled={
-              !selectedVariant?.stock ||
-              selectedVariant.stock === 0 ||
-              addingToCart
-            }
-            className={`mt-8 w-full py-3 px-4 rounded-md font-medium transition-colors ${
-              addedToCart
-                ? "bg-green-600 text-white"
-                : selectedVariant?.stock > 0
-                ? "bg-black text-white hover:bg-gray-800"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
-          >
-            {addingToCart
-              ? "Adding..."
-              : addedToCart
-              ? "Added to Cart ✓"
-              : selectedVariant?.stock > 0
-              ? "Add To Cart"
-              : "Out of Stock"}
-          </button>
-
-          {/* Back to Products */}
           <button
             onClick={() => navigate("/products")}
-            className="mt-4 text-gray-600 hover:text-black transition-colors underline"
+            className="mt-4 text-gray-600 hover:text-black transition-colors underline cursor-pointer"
           >
             ← Back to Products
           </button>

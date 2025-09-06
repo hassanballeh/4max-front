@@ -110,7 +110,7 @@ function App() {
               }
             />
             <Route
-              path="/favouriteList"
+              path="/favoriteList"
               element={
                 <MainLayout>
                   <ProtectedRoute>

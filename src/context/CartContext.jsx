@@ -10,6 +10,44 @@ const CART_ACTIONS = {
   UPDATE_QUANTITY: "UPDATE_QUANTITY",
   CLEAR_CART: "CLEAR_CART",
   LOAD_CART: "LOAD_CART",
+  GET_ALL: "GET_ALL",
+};
+
+// Helper function to safely access localStorage
+const getStoredCart = () => {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const savedCart = localStorage.getItem("shopping_cart");
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        // Validate the structure
+        if (
+          parsedCart &&
+          typeof parsedCart === "object" &&
+          Array.isArray(parsedCart.items)
+        ) {
+          return {
+            items: parsedCart.items || [],
+            totalItems: parsedCart.totalItems || 0,
+          };
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error reading from localStorage:", error);
+  }
+  return null;
+};
+
+// Helper function to safely save to localStorage
+const saveCartToStorage = (cart) => {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem("shopping_cart", JSON.stringify(cart));
+    }
+  } catch (error) {
+    console.error("Error saving to localStorage:", error);
+  }
 };
 
 // Cart Reducer
@@ -51,6 +89,12 @@ const cartReducer = (state, action) => {
           totalItems: state.totalItems + quantity,
         };
       }
+    }
+
+    case CART_ACTIONS.GET_ALL: {
+      // GET_ALL should not modify state, just return current state
+      // This action is mainly for triggering re-renders if needed
+      return state;
     }
 
     case CART_ACTIONS.REMOVE_ITEM: {
@@ -111,40 +155,40 @@ const cartReducer = (state, action) => {
   }
 };
 
-// Initial cart state
-const initialCartState = {
-  items: [],
-  totalItems: 0,
+// Initial cart state - try to load from localStorage first
+const getInitialCartState = () => {
+  const storedCart = getStoredCart();
+  return (
+    storedCart || {
+      items: [],
+      totalItems: 0,
+    }
+  );
 };
 
 // Cart Provider Component
 export const CartProvider = ({ children }) => {
-  const [cart, dispatch] = useReducer(cartReducer, initialCartState);
+  const [cart, dispatch] = useReducer(cartReducer, getInitialCartState());
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
-  // Load cart from localStorage on mount
+  // Load cart from localStorage on mount (fallback for SSR)
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem("shopping_cart");
-      if (savedCart) {
-        const parsedCart = JSON.parse(savedCart);
-        dispatch({
-          type: CART_ACTIONS.LOAD_CART,
-          payload: parsedCart,
-        });
-      }
-    } catch (error) {
-      console.error("Error loading cart from localStorage:", error);
+    const storedCart = getStoredCart();
+    if (storedCart && !isLoaded) {
+      dispatch({
+        type: CART_ACTIONS.LOAD_CART,
+        payload: storedCart,
+      });
     }
-  }, []);
+    setIsLoaded(true);
+  }, [isLoaded]);
 
-  // Save cart to localStorage whenever cart changes
+  // Save cart to localStorage whenever cart changes (but not on initial load)
   useEffect(() => {
-    try {
-      localStorage.setItem("shopping_cart", JSON.stringify(cart));
-    } catch (error) {
-      console.error("Error saving cart to localStorage:", error);
+    if (isLoaded) {
+      saveCartToStorage(cart);
     }
-  }, [cart]);
+  }, [cart, isLoaded]);
 
   // Cart actions
   const addToCart = (variantId, quantity, productInfo) => {
@@ -156,6 +200,23 @@ export const CartProvider = ({ children }) => {
         productInfo,
       },
     });
+  };
+
+  const getAllItems = () => {
+    // Optional: dispatch action for consistency
+    dispatch({ type: CART_ACTIONS.GET_ALL });
+
+    // Return all cart data needed for cart orders/display
+    return {
+      items: cart.items,
+      totalItems: cart.totalItems,
+      totalPrice: cart.items.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      ),
+      itemCount: cart.items.length,
+      isEmpty: cart.items.length === 0,
+    };
   };
 
   const removeFromCart = (variantId) => {
@@ -199,7 +260,9 @@ export const CartProvider = ({ children }) => {
     getCartItem,
     isInCart,
     getCartTotal,
+    getAllItems,
     totalItems: cart.totalItems,
+    isLoaded,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

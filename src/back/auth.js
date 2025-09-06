@@ -9,8 +9,8 @@ export const loginUser = async (email, password) => {
     console.log("e: ", res);
     return res.data;
   } catch (error) {
-    console.log(error.status);
-    throw new Error(error.status);
+    console.log(error);
+    throw new Error(error);
   }
 };
 export const loginAdmin = async ({ email, password }) => {
@@ -79,7 +79,7 @@ export const logout = async () => {
 };
 export const toggleFavoriteProduct = async (id) => {
   try {
-    const res = await apiSecurity.post("/auth/toggleFavoriteProduct", { id });
+    const res = await apiToken.post("/auth/toggleFavoriteProduct", { id });
     console.log(res);
     return res;
   } catch (error) {

@@ -2,23 +2,37 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { getAllProducts } from "../../back/products";
-import { toggleFavoriteProduct } from "../../back/auth";
+import { toggleFavoriteProduct, getUserInfo } from "../../back/auth";
+import { useAuth } from "../../context/AuthContext";
 
 const Products = () => {
+  const ITEMS_PER_LOAD = 1;
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(
+    localStorage.getItem("visibleCount") != null
+      ? localStorage.getItem("visibleCount") + ITEMS_PER_LOAD
+      : 6
+  );
   const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         const response = await getAllProducts();
-        // Transform the API data to match the expected format
-        // console.log("e" + res);
+
+        if (token) {
+          const userInfo = await getUserInfo();
+          if (userInfo?.data?.toggleFavoriteProduct) {
+            setFavorites(userInfo.data.toggleFavoriteProduct);
+          }
+        }
+
         const transformedProducts = response.map((product) => ({
           id: product.id,
           name: product.name,
@@ -27,12 +41,14 @@ const Products = () => {
             "data:"
           )
             ? product.variants[0]?.images[0]?.base64Data
-            : `data:image/jpeg;base64,${product.variants[0]?.images[0]?.base64Data}` ||
-              "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg",
+            : product.variants[0]?.images[0]?.base64Data
+            ? `data:image/jpeg;base64,${product.variants[0]?.images[0]?.base64Data}`
+            : "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg",
           season: product.season.toLowerCase(),
           description: product.description,
           variants: product.variants,
         }));
+
         setProducts(transformedProducts);
       } catch (err) {
         setError("Failed to fetch products");
@@ -43,16 +59,42 @@ const Products = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [token]);
 
-  const toggleFavorite = (id) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
-    );
+  const toggleFavorite = async (id) => {
+    if (!token) {
+      alert("Please log in to add favorites!");
+      return;
+    }
+
+    try {
+      const productIdStr = id.toString();
+      setFavorites((prev) =>
+        prev.includes(productIdStr)
+          ? prev.filter((favId) => favId !== productIdStr)
+          : [...prev, productIdStr]
+      );
+
+      await toggleFavoriteProduct(id);
+    } catch (error) {
+      const productIdStr = id.toString();
+      setFavorites((prev) =>
+        prev.includes(productIdStr)
+          ? prev.filter((favId) => favId !== productIdStr)
+          : [...prev, productIdStr]
+      );
+      console.error("Failed to toggle favorite:", error);
+      alert("Failed to update favorite. Please try again.");
+    }
   };
 
   const showMoreProducts = () => {
-    setVisibleCount((prev) => prev + 8);
+    setLoadingMore(true);
+    setTimeout(() => {
+      setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
+      localStorage.setItem("visibleCount", visibleCount);
+      setLoadingMore(false);
+    }, 300);
   };
 
   const filteredProducts =
@@ -97,7 +139,7 @@ const Products = () => {
             key={season}
             onClick={() => {
               setFilter(season);
-              setVisibleCount(8);
+              setVisibleCount(ITEMS_PER_LOAD);
             }}
             className={`capitalize px-5 py-2 rounded border transition 
               ${
@@ -113,7 +155,7 @@ const Products = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {visibleProducts.map((product) => {
-          const isFavorite = favorites.includes(product.id);
+          const isFavorite = favorites.includes(product.id.toString());
 
           return (
             <div
@@ -124,14 +166,22 @@ const Products = () => {
                 src={product.imageUrl}
                 alt={product.name}
                 className="w-full h-48 object-cover"
+                onError={(e) => {
+                  e.target.src = "bannerPhoto/photo_1_2025-07-16_23-09-20.jpg";
+                }}
               />
 
-              <button
-                onClick={() => toggleFavorite(product.id)}
-                className="absolute top-52 right-3 text-2xl text-red-500 hover:scale-110 transition-transform"
-              >
-                {isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
-              </button>
+              {token && (
+                <button
+                  onClick={() => toggleFavorite(product.id)}
+                  className="absolute top-52 right-3 text-2xl text-red-500 hover:scale-110 transition-transform cursor-pointer"
+                  aria-label={
+                    isFavorite ? "Remove from favorites" : "Add to favorites"
+                  }
+                >
+                  {isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
+                </button>
+              )}
 
               <div className="p-4">
                 <h2 className="text-lg font-semibold mb-1">{product.name}</h2>
@@ -155,9 +205,14 @@ const Products = () => {
         <div className="text-center mt-10">
           <button
             onClick={showMoreProducts}
-            className="bg-[#484848] text-white px-6 py-2 rounded-xl hover:bg-gray-700 transition"
+            disabled={loadingMore}
+            className={`px-6 py-2 rounded-xl transition cursor-pointer ${
+              loadingMore
+                ? "bg-gray-400 text-white cursor-not-allowed"
+                : "bg-[#484848] text-white hover:bg-gray-700"
+            }`}
           >
-            Show More
+            {loadingMore ? "Loading..." : "Show More"}
           </button>
         </div>
       )}

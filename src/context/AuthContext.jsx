@@ -35,6 +35,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken(null);
     setAdminToken(null);
+    if (localStorage.getItem("visibleCount") != null)
+      localStorage.removeItem("visibleCount");
+    if (localStorage.getItem("visibleCountF") != null)
+      localStorage.removeItem("visibleCountF");
+    localStorage.removeItem("shopping_cart");
   };
 
   return (

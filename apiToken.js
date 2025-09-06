@@ -3,7 +3,7 @@ import axios from "axios";
 import { getAccessToken } from "./src/back/auth";
 import { useAuth } from "./src/context/AuthContext";
 const apiToken = axios.create({
-  baseURL: "http://localhost:8080", // Change to your backend
+  baseURL: "http://13.60.254.214:8080", // Change to your backend
   // withCredentials: true, // optional if using cookies
   headers: {
     "Content-Type": "application/json",
@@ -43,6 +43,11 @@ apiToken.interceptors.response.use(
       } catch (err) {
         localStorage.removeItem("token");
         localStorage.removeItem("adminToken");
+        if (localStorage.getItem("visibleCount") != null)
+          localStorage.removeItem("visibleCount");
+        if (localStorage.getItem("visibleCountF") != null)
+          localStorage.removeItem("visibleCountF");
+        localStorage.removeItem("shopping_cart");
         window.location.href = "/";
         return Promise.reject(err);
       }

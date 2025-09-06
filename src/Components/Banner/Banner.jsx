@@ -10,7 +10,7 @@ const Banner = () => {
           <div className="w-full lg:w-1/3 min-h-[300px] lg:min-h-[756px] rounded-lg overflow-hidden flex items-end justify-center">
             <img
               className="w-full h-full object-cover"
-              src="../../../bannerPhoto/photo_2025-07-30_20-34-09.jpg"
+              src="bannerPhoto/photo_2025-07-30_20-34-09.jpg"
               alt="Left banner"
             />
           </div>
@@ -42,7 +42,7 @@ const Banner = () => {
             <div className="w-full min-h-[150px] rounded overflow-hidden">
               <img
                 className="w-full h-full object-cover"
-                src="../../../bannerPhoto/photo_2_2025-07-30_19-02-44.jpg"
+                src="bannerPhoto/photo_2_2025-07-30_19-02-44.jpg"
                 alt="Bottom banner"
               />
             </div>
@@ -52,7 +52,7 @@ const Banner = () => {
           <div className="w-full lg:w-1/3 min-h-[300px] lg:min-h-[756px] rounded-lg overflow-hidden flex items-end justify-center">
             <img
               className="w-full h-full object-cover"
-              src="../../../instagramPhoto/photo_7_2025-07-30_16-40-44.jpg"
+              src="instagramPhoto/photo_7_2025-07-30_16-40-44.jpg"
               alt="Right banner"
             />
           </div>

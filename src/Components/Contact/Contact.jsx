@@ -2,13 +2,13 @@ import React from "react";
 
 const Contact = () => {
   const followers = [
-    { id: 1, image: "../../../instagramPhoto/photo_2_2025-07-30_16-40-44.jpg" },
-    { id: 2, image: "../../../instagramPhoto/photo_8_2025-07-30_16-40-44.jpg" },
-    { id: 3, image: "../../../instagramPhoto/photo_7_2025-07-30_16-40-44.jpg" },
-    { id: 4, image: "../../../instagramPhoto/photo_6_2025-07-30_16-40-44.jpg" },
-    { id: 5, image: "../../../instagramPhoto/photo_4_2025-07-30_16-40-44.jpg" },
-    { id: 6, image: "../../../instagramPhoto/photo_5_2025-07-30_16-40-44.jpg" },
-    { id: 7, image: "../../../instagramPhoto/photo_3_2025-07-30_16-40-44.jpg" },
+    { id: 1, image: "instagramPhoto/photo_2_2025-07-30_16-40-44.jpg" },
+    { id: 2, image: "instagramPhoto/photo_8_2025-07-30_16-40-44.jpg" },
+    { id: 3, image: "instagramPhoto/photo_7_2025-07-30_16-40-44.jpg" },
+    { id: 4, image: "instagramPhoto/photo_6_2025-07-30_16-40-44.jpg" },
+    { id: 5, image: "instagramPhoto/photo_4_2025-07-30_16-40-44.jpg" },
+    { id: 6, image: "instagramPhoto/photo_5_2025-07-30_16-40-44.jpg" },
+    { id: 7, image: "instagramPhoto/photo_3_2025-07-30_16-40-44.jpg" },
   ];
 
   return (

@@ -16,9 +16,9 @@ const SliderComponent = () => {
   };
 
   const slides = [
-    { id: 1, image: "../../../bannerPhoto/IMG_5631.JPG" },
-    { id: 2, image: "../../../bannerPhoto/photo_2_2025-07-30_22-00-59.jpg" },
-    { id: 3, image: "../../../bannerPhoto/photo_2025-08-07_02-36-56.jpg" },
+    { id: 1, image: "bannerPhoto/IMG_5631.JPG" },
+    { id: 2, image: "bannerPhoto/photo_2_2025-07-30_22-00-59.jpg" },
+    { id: 3, image: "bannerPhoto/photo_2025-08-07_02-36-56.jpg" },
   ];
 
   return (

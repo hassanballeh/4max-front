@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https:clothes-back-production.up.railway.app/api", // Change to your backend
+  baseURL: "https://clothes-back-production.up.railway.app/api", // Change to your backend
   // withCredentials: true, // optional if using cookies
   headers: {
     "Content-Type": "application/json",

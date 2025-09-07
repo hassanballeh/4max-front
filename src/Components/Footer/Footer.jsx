@@ -11,7 +11,7 @@ const Footer = () => {
               {" "}
               <img
                 className="w-[7rem] h-[6rem] cursor-pointer"
-                src="public/logo-transparent-svg.svg"
+                src="logo-transparent-svg.svg"
                 alt=""
               />
             </NavLink>

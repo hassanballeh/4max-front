@@ -2,6 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
+  // baseURL: "http://localhost:8080", // Change to your backend
   baseURL: "https://clothes-back-production.up.railway.app", // Change to your backend
   // withCredentials: true, // optional if using cookies
   headers: {

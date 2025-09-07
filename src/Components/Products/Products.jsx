@@ -6,13 +6,13 @@ import { toggleFavoriteProduct, getUserInfo } from "../../back/auth";
 import { useAuth } from "../../context/AuthContext";
 
 const Products = () => {
-  const ITEMS_PER_LOAD = 1;
+  const ITEMS_PER_LOAD = 8;
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [visibleCount, setVisibleCount] = useState(
     localStorage.getItem("visibleCount") != null
       ? localStorage.getItem("visibleCount") + ITEMS_PER_LOAD
-      : 6
+      : 8
   );
   const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(true);

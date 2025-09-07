@@ -15,7 +15,6 @@ const AdminLogin = () => {
 
     try {
       setLoading(true);
-      console.log("res:", email, "  ", password);
       const res = await loginAdmin({ email, password });
       login(res.access_token);
 

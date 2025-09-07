@@ -140,7 +140,7 @@ const ProductDetail = () => {
             : null,
         stock: selectedVariant.stock,
       };
-      console.log("car: ", quantity);
+
       // Add to cart using context
       addToCart(selectedVariant.id, quantity, productInfo);
 

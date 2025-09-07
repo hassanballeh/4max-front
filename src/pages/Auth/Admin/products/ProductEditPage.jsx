@@ -90,7 +90,6 @@ const ProductEditPage = () => {
   useEffect(() => {
     loadProduct();
   }, [id]);
-  console.log("ss:", formData);
   const loadProduct = async () => {
     try {
       setLoading(true);
@@ -131,7 +130,6 @@ const ProductEditPage = () => {
     ) {
       try {
         setSaving(true);
-        console.log("pp ", formData);
         await updateProduct(formData, id);
         alert("Product updated successfully");
         navigate(`/admin/products/${id}`);

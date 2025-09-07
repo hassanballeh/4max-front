@@ -266,10 +266,6 @@ const AdminProductsPage = () => {
       base64Images: currentVariant.base64Images.filter((_, i) => i !== index),
     });
   };
-  console.log(formData);
-  console.log(formData.description);
-  console.log(formData.season);
-  console.log(formData.variants.length);
   // Updated saveProduct function using the utility
   const saveProduct = async () => {
     if (
@@ -280,9 +276,6 @@ const AdminProductsPage = () => {
     ) {
       try {
         setCreating(true);
-        console.log("ews");
-
-        console.log("Product data being sent to API:", formData);
 
         const newProduct = await createProduct(formData);
         setProducts([...products, newProduct]);

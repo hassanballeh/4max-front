@@ -10,7 +10,7 @@ const Checkout = () => {
   const [orderStatus, setOrderStatus] = useState(null); // null, 'success', 'error'
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { getAllItems } = useCart();
+  const { getAllItems, clearCart } = useCart();
   const data = getAllItems().items;
 
   let items = [];
@@ -41,7 +41,7 @@ const Checkout = () => {
         items: items,
         address: formData.address,
       });
-      console.log(res);
+
       setOrderStatus("success");
     } catch (error) {
       console.log(error);
@@ -56,6 +56,7 @@ const Checkout = () => {
 
   // Success state
   if (orderStatus === "success") {
+    clearCart();
     return (
       <div className="max-w-2xl mx-auto mt-25 px-4 py-8">
         <div className="text-center">

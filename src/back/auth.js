@@ -6,7 +6,7 @@ import apiToken from "../../apiToken";
 export const loginUser = async (email, password) => {
   try {
     const res = await apiSecurity.post("/auth/login", { email, password });
-    console.log("e: ", res);
+
     return res.data;
   } catch (error) {
     console.log(error);
@@ -16,7 +16,7 @@ export const loginUser = async (email, password) => {
 export const loginAdmin = async ({ email, password }) => {
   try {
     const res = await apiSecurity.post("/auth/loginAdmin", { email, password });
-    console.log("e: ", res);
+
     return res.data;
   } catch (error) {
     console.log(error);
@@ -70,7 +70,7 @@ export const getAccessToken = async () => {
 export const logout = async () => {
   try {
     const res = await apiSecurity.post("/auth/logout");
-    console.log(res);
+
     return res;
   } catch (error) {
     console.log(error);
@@ -80,7 +80,7 @@ export const logout = async () => {
 export const toggleFavoriteProduct = async (id) => {
   try {
     const res = await apiToken.post("/auth/toggleFavoriteProduct", { id });
-    console.log(res);
+
     return res;
   } catch (error) {
     console.log(error);

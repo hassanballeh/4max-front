@@ -27,7 +27,6 @@ const ProductViewPage = () => {
     try {
       setLoading(true);
       const data = await getProductById(id);
-      console.log(data);
       setProduct(data);
     } catch (error) {
       console.error("Error loading product:", error);

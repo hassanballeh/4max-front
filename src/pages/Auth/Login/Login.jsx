@@ -18,7 +18,6 @@ const Login = () => {
     try {
       const res = await loginUser(email, password);
       authLogin(res.access_token);
-      console.log(res);
       navigate("/");
     } catch (err) {
       if (err.message == 403) {

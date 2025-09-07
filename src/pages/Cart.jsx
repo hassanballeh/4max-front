@@ -12,7 +12,7 @@ const Cart = () => {
     0
   );
   const deliveryFee = 12;
-  const total = subtotal + deliveryFee;
+  const total = subtotal;
 
   const removeItem = (variantId) => {
     removeFromCart(variantId);
@@ -127,10 +127,6 @@ const Cart = () => {
               {cart.totalItems === 1 ? "item" : "items"})
             </span>
             <span>${subtotal.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Delivery Fee</span>
-            <span>${deliveryFee.toFixed(2)}</span>
           </div>
         </div>
 

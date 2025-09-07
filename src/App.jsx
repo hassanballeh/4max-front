@@ -13,16 +13,16 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import FavouriteList from "./pages/FavouriteList";
 import Checkout from "./pages/Checkout";
-import AdminPage from "./pages/Auth/Admin/AdminPage";
+// import AdminPage from "./pages/Auth/Admin/AdminPage";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext"; // Import CartProvider
 import AdminProductsPage from "./pages/Auth/Admin/products/AdminProductsPage";
 import ProductViewPage from "./pages/Auth/Admin/products/ProductViewPage";
 import ProductEditPage from "./pages/Auth/Admin/products/ProductEditPage";
 import AdminDashboard from "./pages/Auth/Admin/AdminDashboard";
-import OrderAdmin from "./pages/Auth/Admin/OrderAdmin";
-import UsersDashboard from "./pages/Auth/Admin/UsersDashboard";
+// import OrderAdmin from "./pages/Auth/Admin/OrderAdmin";
 import MyOrders from "./pages/MyOrders";
+import AdminOrdersPage from "./pages/Auth/Admin/orders/AdminOrdersPage";
 
 const MainLayout = ({ children }) => (
   <>
@@ -119,6 +119,16 @@ function App() {
                 </MainLayout>
               }
             />
+            <Route
+              path="/orders"
+              element={
+                <MainLayout>
+                  <ProtectedRoute>
+                    <MyOrders />
+                  </ProtectedRoute>
+                </MainLayout>
+              }
+            />
 
             <Route
               path="/login"
@@ -177,18 +187,11 @@ function App() {
               path="/admin/orders"
               element={
                 <AdminProtectedRoute>
-                  <OrderAdmin />
+                  <AdminOrdersPage />
                 </AdminProtectedRoute>
               }
             />
-            <Route
-              path="/admin/users"
-              element={
-                <AdminProtectedRoute>
-                  <UsersDashboard />
-                </AdminProtectedRoute>
-              }
-            />
+
             <Route
               path="/admin/products"
               element={
@@ -213,7 +216,6 @@ function App() {
                 </AdminProtectedRoute>
               }
             />
-            <Route path="/MyOrders" element={<MyOrders />} />
           </Routes>
         </BrowserRouter>
       </CartProvider>

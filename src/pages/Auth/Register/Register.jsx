@@ -25,7 +25,6 @@ const Register = () => {
     setIsLoading(true);
     try {
       const response = await registerUser(formData);
-      console.log(response.status);
       localStorage.setItem("username", formData.username);
       navigate("/confirmationCode", {
         state: {

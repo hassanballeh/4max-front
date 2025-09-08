@@ -28,7 +28,6 @@ const Navbar = () => {
         try {
           setLoadingUsername(true);
           const res = await getUserInfo();
-          console.log(res);
           const name =
             res.data.username[0].toUpperCase() + res.data.username.slice(1);
           setUsername(name);
@@ -190,7 +189,7 @@ const Navbar = () => {
               {" "}
               <img
                 className="w-[7rem] h-[6rem] cursor-pointer"
-                src="public/logo-transparent-svg.svg"
+                src="logo-transparent-svg.svg"
                 alt=""
               />
             </NavLink>

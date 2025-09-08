@@ -1,15 +1,64 @@
-import { Link } from 'react-router-dom';
-import ArrivalSlider from '../ArrivalSlider/ArrivalSlider';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import ArrivalSlider from "../ArrivalSlider/ArrivalSlider";
 import { FaHandHoldingHeart, FaAward, FaShippingFast } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
 
 const NewArrival = () => {
+  const targetDate = new Date("2025-09-14T23:59:59").getTime();
+
+  const calculateTimeLeft = () => {
+    const now = new Date().getTime();
+    const difference = targetDate - now;
+
+    let timeLeft = {
+      days: "00",
+      hours: "00",
+      minutes: "00",
+      seconds: "00",
+    };
+
+    if (difference > 0) {
+      timeLeft = {
+        days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(
+          2,
+          "0"
+        ),
+        hours: String(
+          Math.floor((difference / (1000 * 60 * 60)) % 24)
+        ).padStart(2, "0"),
+        minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(
+          2,
+          "0"
+        ),
+        seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, "0"),
+      };
+    }
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const labels = ["Days", "Hr", "Mins", "Secs"];
+  const values = [
+    timeLeft.days,
+    timeLeft.hours,
+    timeLeft.minutes,
+    timeLeft.seconds,
+  ];
+
   return (
     <div className="w-full border-b border-[#d9d9d9] bg-white mt-24 py-16 px-4 md:px-12 xl:px-20">
       <div className="max-w-7xl w-full mx-auto">
-
         <div className="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-16 text-center md:text-left">
-          
           {/* Left Section */}
           <div className="w-full px-10 sm:px-10 md:w-1/2 flex flex-col items-center md:items-start mb-1 pl-12">
             <section id="new-arrivals" className="scroll-mt-24 mb-6">
@@ -19,7 +68,7 @@ const NewArrival = () => {
             </section>
 
             <p className="text-base text-[#8a8a8a] mb-8 max-w-[444px]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus laborum perferendis omnis numquam hic laudantium quod inventore ad autem deserunt.
+            Big Sale at our online shop! Order now and get your items delivered in just a few days. Don’t miss out!.
             </p>
 
             <Link
@@ -29,25 +78,22 @@ const NewArrival = () => {
               Buy Now
             </Link>
 
-            {/* Countdown Timer (moved here) */}
+            {/* Countdown Timer */}
             <div className="mt-4 w-full">
               <h5 className="text-2xl text-[#484848] font-medium capitalize mb-4">
                 Hurry, before it's too late!
               </h5>
               <div className="grid grid-cols-4 gap-6">
-                {['02', '06', '45', '57'].map((val, i) => {
-                  const labels = ['Days', 'Hr', 'Mins', 'Secs'];
-                  return (
-                    <div key={i} className="flex flex-col items-center">
-                      <div className="w-20 h-20 bg-white shadow rounded-sm flex items-center justify-center text-2xl text-[#484848]">
-                        {val}
-                      </div>
-                      <p className="text-lg text-[#484848] capitalize mt-2">
-                        {labels[i]}
-                      </p>
+                {values.map((val, i) => (
+                  <div key={i} className="flex flex-col items-center">
+                    <div className="w-20 h-20 bg-white shadow rounded-sm flex items-center justify-center text-2xl text-[#484848]">
+                      {val}
                     </div>
-                  );
-                })}
+                    <p className="text-lg text-[#484848] capitalize mt-2">
+                      {labels[i]}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -65,22 +111,22 @@ const NewArrival = () => {
               {
                 icon: <FaHandHoldingHeart size="2rem" />,
                 title: "High Quality",
-                subtitle: "Crafted from top materials"
+                subtitle: "Crafted from top materials",
               },
               {
                 icon: <FaAward size="2rem" />,
                 title: "Warranty",
-                subtitle: "Over 2 years"
+                subtitle: "Over 2 years",
               },
               {
                 icon: <FaShippingFast size="2rem" />,
                 title: "Free Shipping",
-                subtitle: "Over $150"
+                subtitle: "Over $150",
               },
               {
                 icon: <IoCall size="2rem" />,
                 title: "24/7 Support",
-                subtitle: "Dedicated support"
+                subtitle: "Dedicated support",
               },
             ].map((item, idx) => (
               <div key={idx} className="flex items-start gap-3">
@@ -97,7 +143,6 @@ const NewArrival = () => {
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );

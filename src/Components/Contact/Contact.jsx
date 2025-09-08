@@ -20,9 +20,7 @@ const Contact = () => {
       </section>
 
       <p className="text-base text-[#8a8a8a] text-center max-w-3xl mb-12">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi numquam
-        perspiciatis veniam laudantium eligendi. Consequatur eaque vero officia
-        atque voluptatum nulla harum? Quam dolorum sunt nesciunt.{" "}
+      Don’t miss out on our latest arrivals, special deals, and exclusive offers! Follow us on Instagram @4max to stay updated, get inspired by our style tips, and be the first to know about upcoming sales. Join our community today and shop smarter with us!.{" "}
       </p>
 
       <div className="flex items-center px-0 lg:px-38">

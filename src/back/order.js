@@ -24,7 +24,6 @@ export const getUserOrders = async () => {
 export const getAllOrders = async () => {
   try {
     const res = await apiToken.get("/api/orders");
-
     return res.data;
   } catch (error) {
     console.log(error);

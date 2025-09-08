@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
   useEffect(() => {
     if (adminToken) {
+      localStorage.clear();
       localStorage.setItem("adminToken", adminToken);
     } else {
       localStorage.removeItem("adminToken");

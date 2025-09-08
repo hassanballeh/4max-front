@@ -12,7 +12,8 @@ const apiToken = axios.create({
 });
 
 apiToken.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token") || localStorage.getItem("adminToken");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -32,9 +33,9 @@ apiToken.interceptors.response.use(
         const response = await getAccessToken();
 
         const res = response;
-        console.log("res1:", res);
+        // console.log("res1:", res);
         const newAccessToken = response.access_token;
-        console.log("res in apitoken:", response);
+        // console.log("res in apitoken:", response);
         localStorage.setItem("token", newAccessToken);
 
         // Save new access token

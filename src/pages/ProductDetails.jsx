@@ -451,7 +451,7 @@ const ProductDetail = () => {
             </button>
           ) : (
             <h1>
-              Long in Now To Add Product To Your Cart{"  "}
+              Log in Now To Add Product To Your Cart{"  "}
               <button
                 onClick={() => navigate("/login")}
                 className=" cursor-pointer text-blue-600"

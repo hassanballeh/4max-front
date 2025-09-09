@@ -128,7 +128,7 @@ const Products = () => {
     <div className="max-w-[1440px] mx-auto px-6 py-12">
       <section
         id="products"
-        className="text-3xl text-[#484848] font-bold mb-6 text-center"
+        className="text-3xl text-[#484848] font-bold mb-6 text-center pt-20"
       >
         Products
       </section>

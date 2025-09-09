@@ -11,6 +11,8 @@ import {
   Trash2,
   Plus,
   Save,
+  Edit3,
+  Check,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -18,14 +20,13 @@ import {
   getAllOrders,
   deleteOrder,
   createOrderByAdmin,
+  updateStatus, // Add this import
 } from "../../../../back/order"; // Adjust path as needed
 
-// Status options for filtering
+// Status options for filtering and updating
 const statusOptions = [
   { value: "PENDING", label: "Pending" },
   { value: "CONFIRMED", label: "Confirmed" },
-  { value: "SHIPPED", label: "Shipped" },
-  { value: "DELIVERED", label: "Delivered" },
   { value: "CANCELLED", label: "Cancelled" },
 ];
 
@@ -62,9 +63,10 @@ const AdminOrdersPage = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [editingStatus, setEditingStatus] = useState(null);
+  const [updatingStatus, setUpdatingStatus] = useState(null);
 
   // Form data for creating new order
   const [formData, setFormData] = useState({
@@ -88,7 +90,7 @@ const AdminOrdersPage = () => {
   // Filter orders when filter criteria change
   useEffect(() => {
     filterOrders();
-  }, [orders, statusFilter, searchTerm]);
+  }, [orders, statusFilter]);
 
   const loadOrders = async () => {
     try {
@@ -119,16 +121,6 @@ const AdminOrdersPage = () => {
       );
     }
 
-    // Filter by search term (order ID or user ID)
-    if (searchTerm.trim()) {
-      const term = searchTerm.toLowerCase().trim();
-      filtered = filtered.filter(
-        (order) =>
-          order.order_id.toLowerCase().includes(term) ||
-          order.user_id.toLowerCase().includes(term)
-      );
-    }
-
     setFilteredOrders(filtered);
   };
 
@@ -143,6 +135,26 @@ const AdminOrdersPage = () => {
         console.error("Error deleting order:", error);
         alert("Failed to delete order: " + error.message);
       }
+    }
+  };
+
+  const handleUpdateStatus = async (orderId, newStatus) => {
+    try {
+      setUpdatingStatus(orderId);
+      await updateStatus(orderId, newStatus);
+
+      // Update the order in state
+      const updatedOrders = orders.map((order) =>
+        order.order_id === orderId ? { ...order, status: newStatus } : order
+      );
+      setOrders(updatedOrders);
+      setEditingStatus(null);
+      alert("Order status updated successfully");
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      alert("Failed to update order status: " + error.message);
+    } finally {
+      setUpdatingStatus(null);
     }
   };
 
@@ -161,10 +173,6 @@ const AdminOrdersPage = () => {
         return "bg-yellow-100 text-yellow-800";
       case "CONFIRMED":
         return "bg-blue-100 text-blue-800";
-      case "SHIPPED":
-        return "bg-purple-100 text-purple-800";
-      case "DELIVERED":
-        return "bg-green-100 text-green-800";
       case "CANCELLED":
         return "bg-red-100 text-red-800";
       default:
@@ -174,7 +182,6 @@ const AdminOrdersPage = () => {
 
   const clearFilters = () => {
     setStatusFilter(null);
-    setSearchTerm("");
   };
 
   const getOrderStats = () => {
@@ -182,8 +189,6 @@ const AdminOrdersPage = () => {
       total: orders.length,
       pending: orders.filter((o) => o.status === "PENDING").length,
       confirmed: orders.filter((o) => o.status === "CONFIRMED").length,
-      shipped: orders.filter((o) => o.status === "SHIPPED").length,
-      delivered: orders.filter((o) => o.status === "DELIVERED").length,
       cancelled: orders.filter((o) => o.status === "CANCELLED").length,
     };
     return stats;
@@ -262,6 +267,7 @@ const AdminOrdersPage = () => {
       }
     }
   };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -319,18 +325,6 @@ const AdminOrdersPage = () => {
               <div className="text-sm text-gray-600">Confirmed</div>
             </div>
             <div className="bg-white p-4 rounded-lg shadow-sm">
-              <div className="text-2xl font-bold text-purple-600">
-                {stats.shipped}
-              </div>
-              <div className="text-sm text-gray-600">Shipped</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm">
-              <div className="text-2xl font-bold text-green-600">
-                {stats.delivered}
-              </div>
-              <div className="text-sm text-gray-600">Delivered</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm">
               <div className="text-2xl font-bold text-red-600">
                 {stats.cancelled}
               </div>
@@ -338,7 +332,7 @@ const AdminOrdersPage = () => {
             </div>
           </div>
 
-          {/* Filters */}
+          {/* Filters - Only Status Filter */}
           <div className="bg-white p-4 rounded-lg shadow-sm">
             <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
               <div className="flex items-center gap-2">
@@ -357,19 +351,9 @@ const AdminOrdersPage = () => {
                     isClearable
                   />
                 </div>
-
-                <div className="w-full md:w-64">
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Search by Order ID or User ID"
-                  />
-                </div>
               </div>
 
-              {(statusFilter || searchTerm) && (
+              {statusFilter && (
                 <button
                   onClick={clearFilters}
                   className="flex items-center gap-1 px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
@@ -602,7 +586,7 @@ const AdminOrdersPage = () => {
                 ? "Orders will appear here once customers start placing them"
                 : "Try adjusting your filters to see more results"}
             </p>
-            {(statusFilter || searchTerm) && (
+            {statusFilter && (
               <button
                 onClick={clearFilters}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg inline-flex items-center gap-2 transition-colors"
@@ -660,13 +644,51 @@ const AdminOrdersPage = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getStatusBadgeColor(
-                              order.status
-                            )}`}
-                          >
-                            {order.status}
-                          </span>
+                          {editingStatus === order.order_id ? (
+                            <div className="flex items-center gap-2">
+                              <Select
+                                value={statusOptions.find(
+                                  (opt) => opt.value === order.status
+                                )}
+                                onChange={(selectedOption) =>
+                                  handleUpdateStatus(
+                                    order.order_id,
+                                    selectedOption.value
+                                  )
+                                }
+                                options={statusOptions}
+                                styles={{
+                                  ...customSelectStyles,
+                                  control: (provided, state) => ({
+                                    ...provided,
+                                    minWidth: "140px",
+                                    fontSize: "14px",
+                                  }),
+                                }}
+                                isDisabled={updatingStatus === order.order_id}
+                              />
+                              {updatingStatus === order.order_id && (
+                                <Loader2 className="animate-spin h-4 w-4 text-blue-600" />
+                              )}
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getStatusBadgeColor(
+                                  order.status
+                                )}`}
+                              >
+                                {order.status}
+                              </span>
+                              <button
+                                onClick={() => setEditingStatus(order.order_id)}
+                                className="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
+                                title="Edit status"
+                              >
+                                <Edit3 size={14} />
+                              </button>
+                            </div>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">

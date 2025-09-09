@@ -50,3 +50,12 @@ export const createOrderByAdmin = async (data) => {
     throw new Error(error);
   }
 };
+export const updateStatus = async (id, status) => {
+  try {
+    const res = await apiToken.get(`/api/orders/${id}/status?status=${status}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

@@ -206,6 +206,7 @@ const AdminProductsPage = () => {
     });
     setEditingVariantIndex(index);
   };
+  console.log(products);
 
   const cancelVariantEdit = () => {
     setCurrentVariant({

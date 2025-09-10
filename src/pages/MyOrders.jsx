@@ -103,15 +103,11 @@ const MyOrders = () => {
   const getStatusStyle = (status) => {
     switch (status?.toUpperCase()) {
       case "CONFIRMED":
-      case "DELIVERED":
-      case "DONE":
         return "bg-green-100 text-green-800 border-green-300";
       case "PENDING":
         return "bg-yellow-100 text-yellow-800 border-yellow-300";
       case "CANCELLED":
         return "bg-red-100 text-red-800 border-red-300";
-      case "SHIPPED":
-        return "bg-blue-100 text-blue-800 border-blue-300";
       default:
         return "bg-gray-100 text-gray-800 border-gray-300";
     }
@@ -140,7 +136,7 @@ const MyOrders = () => {
   const getOrderTotal = (items) => {
     if (!items || !Array.isArray(items)) return 0;
     return items.reduce((total, item) => {
-      const variant = variantDetails[item.variantId];
+      const variant = variantDetails[item.product_variant_id];
       const price = variant?.price || 0;
       const quantity = item.quantity || 0;
       return total + price * quantity;
@@ -158,6 +154,7 @@ const MyOrders = () => {
       </div>
     );
   }
+  console.log(myOrders);
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto">
@@ -167,12 +164,11 @@ const MyOrders = () => {
             Here you can find the history of all your orders.
           </p>
         </div>
-
         {myOrders && myOrders.length > 0 ? (
           <div className="space-y-6">
             {myOrders.map((order) => (
               <div
-                key={order.order_id || order.id}
+                key={order.order_id}
                 className="bg-white rounded-xl shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg"
               >
                 {/* Order Header */}
@@ -183,10 +179,10 @@ const MyOrders = () => {
                 >
                   <div>
                     <h2 className="text-xl font-bold">
-                      Order #{order.order_id || order.id || "N/A"}
+                      Order #{order.order_id || "N/A"}
                     </h2>
                     <p className="text-sm font-medium">
-                      Date: {formatDate(order.createdAt || order.created_at)}
+                      Date: {formatDate(order.createdAt)}
                     </p>
                     <p className="text-sm font-medium">
                       Items: {getTotalItems(order.items)} | Total: $
@@ -248,9 +244,6 @@ const MyOrders = () => {
                             <div className="flex-grow">
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <p className="font-medium text-gray-800">
-                                    Variant ID: {item.variantId}
-                                  </p>
                                   <div className="flex items-center space-x-3 mt-1">
                                     {variant?.color && (
                                       <div className="flex items-center space-x-1">
@@ -288,14 +281,14 @@ const MyOrders = () => {
                                       ${variant.price.toFixed(2)} each
                                     </p>
                                   )}
-                                  {variant?.price && item.quantity && (
+                                  {/* {variant?.price && item.quantity && (
                                     <p className="text-sm text-gray-600">
                                       Subtotal: $
                                       {(variant.price * item.quantity).toFixed(
                                         2
                                       )}
                                     </p>
-                                  )}
+                                  )} */}
                                 </div>
                               </div>
                             </div>

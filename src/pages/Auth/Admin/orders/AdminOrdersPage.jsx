@@ -96,8 +96,17 @@ const AdminOrdersPage = () => {
     try {
       setLoading(true);
       const data = await getAllOrders();
+
+      // Ensure each order has proper structure with items array
+      const ordersWithDefaults = data.map((order) => ({
+        ...order,
+        items: order.items || [], // Ensure items is always an array
+        status: order.status || "PENDING",
+        createdAt: order.createdAt || Date.now().toString(),
+      }));
+
       // Sort orders by creation date (newest first)
-      const sortedOrders = data.sort((a, b) => {
+      const sortedOrders = ordersWithDefaults.sort((a, b) => {
         const timestampA = parseInt(a.createdAt);
         const timestampB = parseInt(b.createdAt);
         return timestampB - timestampA;
@@ -163,8 +172,12 @@ const AdminOrdersPage = () => {
     return date.toLocaleDateString() + " " + date.toLocaleTimeString();
   };
 
+  // FIXED: Added safety check for undefined/null items
   const getTotalItems = (items) => {
-    return items.reduce((total, item) => total + item.quantity, 0);
+    if (!items || !Array.isArray(items)) {
+      return 0;
+    }
+    return items.reduce((total, item) => total + (item.quantity || 0), 0);
   };
 
   const getStatusBadgeColor = (status) => {
@@ -214,28 +227,58 @@ const AdminOrdersPage = () => {
   };
 
   const addItemToOrder = () => {
+    // Validate all required fields
     if (
-      currentItem.product_id &&
-      currentItem.product_variant_id &&
-      currentItem.quantity
+      !currentItem.product_id ||
+      !currentItem.product_variant_id ||
+      !currentItem.quantity
     ) {
-      const item = {
-        quantity: parseInt(currentItem.quantity),
-        product_id: parseInt(currentItem.product_id),
-        product_variant_id: parseInt(currentItem.product_variant_id),
-      };
-
-      setFormData({
-        ...formData,
-        items: [...formData.items, item],
-      });
-
-      setCurrentItem({
-        product_id: 0,
-        product_variant_id: 0,
-        quantity: 0,
-      });
+      alert("Please fill in Product ID, Variant ID, and Quantity");
+      return;
     }
+
+    // Validate positive numbers
+    if (
+      parseInt(currentItem.product_id) <= 0 ||
+      parseInt(currentItem.product_variant_id) <= 0 ||
+      parseInt(currentItem.quantity) <= 0
+    ) {
+      alert("Product ID, Variant ID, and Quantity must be positive numbers");
+      return;
+    }
+
+    // Check for duplicate items (same product and variant)
+    const isDuplicate = formData.items.some(
+      (item) =>
+        item.product_id === parseInt(currentItem.product_id) &&
+        item.product_variant_id === parseInt(currentItem.product_variant_id)
+    );
+
+    if (isDuplicate) {
+      alert(
+        "This product variant is already in the order. Please remove it first or use a different variant."
+      );
+      return;
+    }
+
+    const item = {
+      quantity: parseInt(currentItem.quantity),
+      product_id: parseInt(currentItem.product_id),
+      product_variant_id: parseInt(currentItem.product_variant_id),
+    };
+
+    setFormData({
+      ...formData,
+      items: [...formData.items, item],
+    });
+
+    setCurrentItem({
+      product_id: 0,
+      product_variant_id: 0,
+      quantity: 0,
+    });
+
+    alert("Item added to order successfully!");
   };
 
   const removeItem = (index) => {
@@ -254,17 +297,51 @@ const AdminOrdersPage = () => {
     ) {
       try {
         setCreating(true);
-        const newOrder = await createOrderByAdmin(formData);
-        setOrders([newOrder, ...orders]);
-        setShowCreateForm(false);
-        resetForm();
-        alert("Order created successfully");
+        const response = await createOrderByAdmin(formData);
+
+        // Check if the API response indicates success
+        if (response.success === true) {
+          // Order created successfully
+          const orderWithDefaults = {
+            ...response,
+            items: formData.items || [], // Use form data items since API might not return them
+            status: response.status || "PENDING",
+            createdAt: response.createdAt || Date.now().toString(),
+            user_id: formData.user_id,
+            email: formData.email,
+            address: formData.address,
+          };
+
+          setOrders([orderWithDefaults, ...orders]);
+          setShowCreateForm(false);
+          resetForm();
+          alert("Order created successfully");
+
+          // Optionally reload orders to get fresh data
+          await loadOrders();
+        } else {
+          // Order creation failed - show the error message from API
+          alert(response.message || "Failed to create order");
+        }
       } catch (error) {
         console.error("Error creating order:", error);
         alert("Failed to create order: " + error.message);
       } finally {
         setCreating(false);
       }
+    } else {
+      // Validation error for missing required fields
+      let missingFields = [];
+      if (!formData.user_id) missingFields.push("User ID");
+      if (!formData.email) missingFields.push("Email");
+      if (!formData.address) missingFields.push("Address");
+      if (formData.items.length === 0) missingFields.push("At least one item");
+
+      alert(
+        `Please fill in the following required fields: ${missingFields.join(
+          ", "
+        )}`
+      );
     }
   };
 
@@ -692,11 +769,12 @@ const AdminOrdersPage = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
-                            {getTotalItems(order.items)} items
+                            {/* FIXED: Added safety check for getTotalItems call */}
+                            {getTotalItems(order.items || [])} items
                           </div>
                           <div className="text-xs text-gray-500">
-                            {order.items.length} product
-                            {order.items.length !== 1 ? "s" : ""}
+                            {(order.items || []).length} product
+                            {(order.items || []).length !== 1 ? "s" : ""}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
